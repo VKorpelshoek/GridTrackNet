@@ -1,7 +1,10 @@
 # GridTrackNet
 A Tensorflow implementation of GridTrackNet for real time tennis ball tracking; a CNN aimed at locating and tracking a small fast moving object throughout multiple concurrent frames by means of grid outputs.
 
-![image](https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet.png) 
+<p align="center">
+  <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet.png" alt="image" style="display:block; margin:auto;" />
+</p>
+
 
 Official paper: **LINK TO PAPER**
 
@@ -33,10 +36,10 @@ Disclaimer: some parts of the source code have been developed in assistance with
 Note: metrics were computed only once on a separate test dataset.
 
 ### Formulas
-- Accuracy = (TP + TN) / (TP + TN + FP1 + FP2 + FN)
-- Precision = TP / (TP + FP1 + FP2)
-- Recall = TP / (TP + FN)
-- F1 = (2*(Precision*Recall)) / (Precision + Recall)
+- Accuracy = \(\frac{{TP + TN}}{{TP + TN + FP1 + FP2 + FN}}\)
+- Precision = \(\frac{{TP}}{{TP + FP1 + FP2}}\)
+- Recall = \(\frac{{TP}}{{TP + FN}}\)
+- F1 = \(\frac{{2 \cdot (Precision \cdot Recall)}}{{Precision + Recall}}\)
 
 ### Formula Variable Definitions
 - TP (True Positive): when the model correctly predicts the location of a ball within a frame being less than 4 pixels from the true ball location.
@@ -62,7 +65,7 @@ ADD HERE THE API FOR THE INFERENCE OR VIDEO GENERATION
 4. Train
 5. Inference
 
-Resulting Dataset Folder Structure:
+Resulting Sample Dataset Folder Structure:
 ```
 Dataset
 |   
@@ -97,6 +100,13 @@ Dataset
 |       |     |___x.png
 |       |
 |       |____ Labels.csv
+
+|___TFRecordFiles    
+|       |___train0.tfrecord
+|       |___train1.tfrecord
+|       ...
+|       |___trainX.tfrecord
+|       |___val.tfrecord
 ```  
 
 ### Frame Generator
