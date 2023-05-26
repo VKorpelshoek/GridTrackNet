@@ -1,5 +1,7 @@
 # GridTrackNet
-A Tensorflow implementation of GridTrackNet for real time tennis ball tracking; a CNN aimed at locating and tracking a small fast moving object throughout multiple concurrent frames by means of grid outputs. 
+A Tensorflow implementation of GridTrackNet for real time tennis ball tracking; a CNN aimed at locating and tracking a small fast moving object throughout multiple concurrent frames by means of grid outputs.
+
+![image](https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet.png) 
 
 Official paper: **LINK TO PAPER**
 
