@@ -9,9 +9,9 @@ Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
 Disclaimer: some parts of the source code have been developed in assistance with ChatGPT and, even though unlikely, might contain unexpected behavior at times.
 
-<div style="text-align:center">
-  <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" />
-</div>
+<p align="center">
+  <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
+</p>
 
 ## Main changes to TrackNetv2
 1. Removed upsampling layers for faster inference: output consists of three 48x27 grids per frame: confidence grid, x-offset grid, and y-offset grid.
