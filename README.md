@@ -22,8 +22,24 @@ Based on TrackNet: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 |Recall|0.8386|**NEW VAL**|
 |F1|0.8550|**NEW VAL**|
 
+Accuracy = (TP + TN) / (TP + TN + FP1 + FP2 + FN)
 
-  
+Precision = TP / (TP + FP1 + FP2)
+
+Recall = TP / (TP + FN)
+
+F1 = (2*(Precision*Recall))/(Precision + Recall)
+
+TP (True Positive): when predicted ball location is less than 4 pixels from true ball location.
+
+TN (True Negative): when the model correctly predicts no ball in a frame.
+
+FP1 (False Positive Type 1): when the model correctly predicts the presence of a ball within a frame, but outside the tolerance value of 4 pixels.
+
+FP2 (False Positive Type 2): when the model predicts the presence of a ball within a frame while there is no ball visible. 
+
+FN (False Negative): when the model fails to make a prediction in a frame while it should have.
+
 
 ## Architecture
 Adapted version of the VGG16 model. 
@@ -31,17 +47,17 @@ Adapted version of the VGG16 model.
 |-|-----|-------|-----------|----------|---|
 |1|Conv2D|64|3x3|ReLU + Batch Norm.|768 x 432|
 |2|Conv2D|64|3x3|ReLU + Batch Norm.|768 x 432|
-|3|MaxPool2D|-|2x2 pooling|-|384 x 216|
+|3|MaxPool2D|-|2x2 pooling, 2x2 strides|-|384 x 216|
 |4|Conv2D|128|3x3|ReLU + Batch Norm.|384 x 216|
 |5|Conv2D|128|3x3|ReLU + Batch Norm.|384 x 216|
-|6|MaxPool2D|-|2x2 pooling|-|192 x 108|
+|6|MaxPool2D|-|2x2 pooling, 2x2 strides|-|192 x 108|
 |7|Conv2D|256|3x3|ReLU + Batch Norm.|192 x 108|
 |8|Conv2D|256|3x3|ReLU + Batch Norm.|192 x 108|
-|9|MaxPool2D|-|2x2 pooling|-|96 x 54|
+|9|MaxPool2D|-|2x2 pooling, 2x2 strides|-|96 x 54|
 |10|Conv2D|256|3x3|ReLU + Batch Norm.|96 x 54|
 |11|Conv2D|256|3x3|ReLU + Batch Norm.|96 x 54|
 |12|Conv2D|256|3x3|ReLU + Batch Norm.|96 x 54|
-|13|MaxPool2D|-|2x2 pooling|-|48 x 27|
+|13|MaxPool2D|-|2x2 pooling, 2x2 strides|-|48 x 27|
 |14|Conv2D|512|3x3|ReLU + Batch Norm.|48 x 27|
 |15|Conv2D|512|3x3|ReLU + Batch Norm.|48 x 27|
 |16|Conv2D|512|3x3|ReLU + Batch Norm.|48 x 27|
