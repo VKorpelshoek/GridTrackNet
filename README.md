@@ -10,23 +10,24 @@ Official paper: **LINK TO PAPER**
 
 Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
+### Main improvements to TrackNetv2
+1. Faster inference: output consists of three 48x27 grids per frame: confidence grid, x-offset grid, and y-offset grid.
+2. 5 input frames and 5 output frames
+3. Increased input resolution from 512x288 to 768x432
+
 Disclaimer: some parts of the source code have been developed in assistance with ChatGPT and, even though unlikely, might contain unexpected behavior at times.
 
 <p align="center">
   <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
 </p>
 
-## Main changes to TrackNetv2
-1. Removed upsampling layers for faster inference: output consists of three 48x27 grids per frame: confidence grid, x-offset grid, and y-offset grid.
-2. 5 input frames and 5 output frames
-3. Increased input resolution from 512x288 to 768x432
-
 ### GridTrackNet vs TrackNetv2 Comparison:
 
 |Metric|TrackNetv2|**GridTrackNet**|   
 |---------|-----|-----|
 |Input/output frames|3/3| **5/5**|
-|Image resolution|512 x 288| **768 x 432**|
+|Input resolution|512 x 288| **768 x 432**|
+|Output resolution|512 x 288| **48 x 27**|
 |Inference speed|FPS ON 3080|**FPS ON 3080**|
 |Accuracy|0.7501|**NEW VAL**|
 |Precision|0.8721|**NEW VAL**|
