@@ -36,7 +36,8 @@ Disclaimer: some parts of the source code have been developed in assistance with
 Note: metrics were computed only once on a separate test dataset.
 
 ### Formulas
-- Accuracy =  \frac{{\text{TP} + \text{TN}}}{{\text{TP} + \text{TN} + \text{FP1} + \text{FP2} + \text{FN}}} \
+- Accuracy =  \(\frac{{\text{TP} + \text{TN}}}{{\text{TP} + \text{TN} + \text{FP1} + \text{FP2} + \text{FN}}}\)
+
 
 - Accuracy = (TP + TN) / (TP + TN + FP1 + FP2 + FN)
 - Precision = TP / (TP + FP1 + FP2)
