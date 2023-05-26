@@ -8,7 +8,8 @@ Official paper: **LINK TO PAPER**
 Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
 Disclaimer: some parts of the source code have been developed in assistance with ChatGPT and, even though unlikely, might contain unexpected behavior at times.
-## VIDEO EXAMPLE
+
+![image](https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif) 
 
 
 ## Main changes to TrackNetv2
