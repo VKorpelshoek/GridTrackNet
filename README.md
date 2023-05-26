@@ -36,10 +36,12 @@ Disclaimer: some parts of the source code have been developed in assistance with
 Note: metrics were computed only once on a separate test dataset.
 
 ### Formulas
-- Accuracy = \\frac{{TP + TN}}{{TP + TN + FP1 + FP2 + FN}}\
-- Precision = \\frac{{TP}}{{TP + FP1 + FP2}}\
-- Recall = \\frac{{TP}}{{TP + FN}}\
-- F1 = \\frac{{2 \cdot (Precision \cdot Recall)}}{{Precision + Recall}}\
+- Accuracy =  \frac{{\text{TP} + \text{TN}}}{{\text{TP} + \text{TN} + \text{FP1} + \text{FP2} + \text{FN}}} \
+
+- Accuracy = (TP + TN) / (TP + TN + FP1 + FP2 + FN)
+- Precision = TP / (TP + FP1 + FP2)
+- Recall = TP / (TP + FN)
+- F1 = (2*(Precision*Recall)) / (Precision + Recall)
 
 ### Formula Variable Definitions
 - TP (True Positive): when the model correctly predicts the location of a ball within a frame being less than 4 pixels from the true ball location.
