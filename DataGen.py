@@ -146,92 +146,90 @@ for m in range(1, numMatchFolders+1):
     if(not os.path.exists(matchPath)):    
         print("\nERROR: The following directory does not exist: " + str(matchPath))
         exit(1)
-    for framesFolder in os.listdir(matchPath):
-        frames_path = os.path.join(matchPath, framesFolder)
-        if framesFolder == 'frames':
-            if(not os.path.exists(os.path.join(frames_path, 'Labels.csv'))):    
-                print("\nERROR: No 'Labels.cvs' file found at path: " + str(os.path.join(frames_path, 'Labels.csv')))
-                exit(1)
-            with open(os.path.join(frames_path, 'Labels.csv')) as csvfile:
-                reader = csv.DictReader(csvfile)
-                readerList = list(reader)
-                i = 0
-                while(i + IMGS_PER_INSTANCE - 1 < len(readerList)):
-                    currInstanceIndex = i
-                    visibilities = []
-                    xCoords = []
-                    yCoords = []
-                    imgs = []
+    framesPath = os.path.join(matchPath, "frames")
+    if(not os.path.exists(os.path.join(matchPath, 'Labels.csv'))):    
+        print("\nERROR: No 'Labels.cvs' file found at path: " + str(os.path.join(matchPath, 'Labels.csv')))
+        exit(1)
+    with open(os.path.join(matchPath, 'Labels.csv')) as csvfile:
+        reader = csv.DictReader(csvfile)
+        readerList = list(reader)
+        i = 0
+        while(i + IMGS_PER_INSTANCE - 1 < len(readerList)):
+            currInstanceIndex = i
+            visibilities = []
+            xCoords = []
+            yCoords = []
+            imgs = []
 
-                    for j in range(0,IMGS_PER_INSTANCE):
-                        imgPath = os.path.join(frames_path, str(int(readerList[i+j]['Frame'])) + '.png')
+            for j in range(0,IMGS_PER_INSTANCE):
+                imgPath = os.path.join(framesPath, str(int(readerList[i+j]['Frame'])) + '.png')
 
-                        if(not os.path.exists(imgPath)):    
-                            print("\nERROR: Image not found at path: " + str(imgPath))
-                            exit(1)
+                if(not os.path.exists(imgPath)):    
+                    print("\nERROR: Image not found at path: " + str(imgPath))
+                    exit(1)
 
-                        img = load_img(imgPath)
-                        img = img_to_array(img)
+                img = load_img(imgPath)
+                img = img_to_array(img)
 
-                        visibilities.append(int(readerList[i+j]['Visibility']))
-                        xCoords.append(int(readerList[i+j]['X']))
-                        yCoords.append(int(readerList[i+j]['Y']))
+                visibilities.append(int(readerList[i+j]['Visibility']))
+                xCoords.append(int(readerList[i+j]['X']))
+                yCoords.append(int(readerList[i+j]['Y']))
 
-                        imgs.append(img)
+                imgs.append(img)
 
-                    dataEntry, labelEntry = getDataAndLabels(imgs, xCoords, yCoords, visibilities)
+            dataEntry, labelEntry = getDataAndLabels(imgs, xCoords, yCoords, visibilities)
 
-                    if(AUGMENT_DATA):
-                        #Adding the augmented version to train data.
-                        example = serializeExample(dataEntry[1], labelEntry[1])
-                        currBatchIdx += 1
-                        numTrainInstances += 1
-                        trainWriter.write(example)
-                        if(currBatchIdx == BATCH_SIZE):
-                            batchCount += 1
-                            trainFileName = EXPORT_DIR + '/train' + str(batchCount) + '.tfrecord'
-                            trainWriter = tf.io.TFRecordWriter(trainFileName)
-                            currBatchIdx = 0
+            if(AUGMENT_DATA):
+                #Adding the augmented version to train data.
+                example = serializeExample(dataEntry[1], labelEntry[1])
+                currBatchIdx += 1
+                numTrainInstances += 1
+                trainWriter.write(example)
+                if(currBatchIdx == BATCH_SIZE):
+                    batchCount += 1
+                    trainFileName = EXPORT_DIR + '/train' + str(batchCount) + '.tfrecord'
+                    trainWriter = tf.io.TFRecordWriter(trainFileName)
+                    currBatchIdx = 0
 
-                        example = serializeExample(dataEntry[0], labelEntry[0])
-                    else:
-                        example = serializeExample(dataEntry, labelEntry)
-                    
-                    if(isValInstance()):
-                        numTestInstances += 1
-                        valWriter.write(example)
-                    else:
-                        currBatchIdx += 1
-                        numTrainInstances += 1
-                        trainWriter.write(example)
-                        if(currBatchIdx == BATCH_SIZE):
-                            batchCount += 1
-                            trainFileName = EXPORT_DIR + '/train' + str(batchCount) + '.tfrecord'
-                            trainWriter = tf.io.TFRecordWriter(trainFileName)
-                            currBatchIdx = 0
-                        
-                                            
-                    #Prints progress bar
-                    percent_complete = int(round(m * 100 / (numMatchFolders+1), 0))
-                    bar = "#" * int(percent_complete / 10)
-                    space = " " * (10 - int(percent_complete / 10))
-                    print("\rProcessing Match {}: |{}{}| {}%. Training instances: {}, validation instances: {}.".format(m, bar, space, percent_complete,numTrainInstances,numTestInstances), end="")
-        
+                example = serializeExample(dataEntry[0], labelEntry[0])
+            else:
+                example = serializeExample(dataEntry, labelEntry)
+            
+            if(isValInstance()):
+                numTestInstances += 1
+                valWriter.write(example)
+            else:
+                currBatchIdx += 1
+                numTrainInstances += 1
+                trainWriter.write(example)
+                if(currBatchIdx == BATCH_SIZE):
+                    batchCount += 1
+                    trainFileName = EXPORT_DIR + '/train' + str(batchCount) + '.tfrecord'
+                    trainWriter = tf.io.TFRecordWriter(trainFileName)
+                    currBatchIdx = 0
+                
+                                    
+            #Prints progress bar
+            percent_complete = int(round(m * 100 / (numMatchFolders+1), 0))
+            bar = "#" * int(percent_complete / 10)
+            space = " " * (10 - int(percent_complete / 10))
+            print("\rProcessing Match {}: |{}{}| {}%. Training instances: {}, validation instances: {}.".format(m, bar, space, percent_complete,numTrainInstances,numTestInstances), end="")
 
-                    i = currInstanceIndex + NEXT_IMG_INDEX
-        
+
+            i = currInstanceIndex + NEXT_IMG_INDEX
+
 print("\nDone.")
 
 
 
 
-                                
+                        
 
 
-
-                            
 
                     
+
+            
 
 
 

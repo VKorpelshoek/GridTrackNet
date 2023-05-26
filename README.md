@@ -7,7 +7,7 @@ Official paper: **LINK TO PAPER**
 
 Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
-
+Disclaimer: some parts of the source code have been developed in assistance with ChatGPT and, even though unlikely, might contain unexpected behavior at times.
 ## VIDEO EXAMPLE
 
 
@@ -44,8 +44,7 @@ Note: metrics were computed only once on a separate test dataset.
 - FN (False Negative): when the model incorrectly predicts the absence of a ball within a frame while there is a ball visible. 
 
 
-## Disclaimer
-Some parts of the source code have been developed in assistance with ChatGPT and, even though unlikely, might contain unexpected behavior at times.
+
 
 ## Setup
 HERE IS HOW TO SETUP requirements.txt
@@ -54,20 +53,70 @@ Also installation of cuda
 ## Inference API / Video
 ADD HERE THE API FOR THE INFERENCE OR VIDEO GENERATION
 
-## Frame extractor
-input video, output dir, 
+## Custom Training Guide
+1. Per video, use the frame extractor to save all frames inside a folder.
+2. Per frames folder, label the balls.
+3. After all frames have been annotated, use the DataGen.py
+4. Train
+5. Inference
 
-## Labelling Tool
+Resulting Dataset Folder Structure:
+```
+Tennis Dataset
+|   
+|___match1    
+|       |    
+|       |___ frames
+|       |     |___0.png
+|       |     |___1.png
+|       |     |...
+|       |     |___x.png
+|       |
+|       |____ Labels.csv
+|     
+|___match2    
+|       |    
+|       |___ frames
+|       |     |___0.png
+|       |     |___1.png
+|       |     |...
+|       |     |___x.png
+|       |
+|       |____ Labels.csv
+| 
+|...
+|
+|___matchX    
+|       |    
+|       |___ frames
+|       |     |___0.png
+|       |     |___1.png
+|       |     |...
+|       |     |___x.png
+|       |
+|       |____ Labels.csv
+```  
 
+### Frame extractor
+Outputs individual frames with resolution 1280x720 from an input video.
+
+Note: input video format must .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with 'matchX', where X is an index (first index is 1.) 
+
+
+Example usage:
+```bash
+python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir="path/to/folder/matchX"
+```   
+
+### Labelling Tool
+Outputs a Labels.csv file in the /matchX/frames folder containing the pixel coordinate and visibility per frame.
+
+Note: you can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. It is advised to use a mouse with a scroll wheel for zooming capabilities. For faster annotation speeds, the next frame is automatically loaded after annotating the previous frame.
 
 Example usage:
 ```bash
 python "/path/to/LabellingTool.py" --frames_dir="path/to/folder/matchX/frames/"
 ```   
-
-Outputs a Labels.csv file in the /matchX/frames folder containing the pixel coordinate and visibility per frame.
-
-Note: you can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. It is advised to use a mouse with a scroll wheel for zooming capabilities. For faster annotation speeds, the next frame is automatically loaded after annotating the previous frame.
 
 Controls:
 |Type|Event|Function|   
@@ -84,7 +133,7 @@ Controls:
 
 
 
-## Dataset Generation
+### Dataset Generation
 The dataset consists of x images from 81 different tennis video's, combined into x training instances and x validation instances. 
 
 Link: ....
@@ -126,7 +175,7 @@ Accepted arguments:
 ```
 
 
-## Training
+### Training
 
 
 ## Architecture

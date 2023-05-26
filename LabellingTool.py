@@ -13,11 +13,22 @@ from PySide2.QtWidgets import QApplication, QGraphicsView, QGraphicsScene, QGrap
 
 parser = argparse.ArgumentParser(description='Argument Parser for GridTrackNet')
 
-parser.add_argument('--frames_dir', required=True, type=str, help="Frame directory containing the .png images.")
+parser.add_argument('--match_dir', required=True, type=str, help="Match directory. Must be named with prefix 'match' following by an index.")
 
 args = parser.parse_args()
 
-FRAMES_DIR = args.frames_dir
+MATCH_DIR = args.match_dir
+FRAMES_DIR = os.path.join(MATCH_DIR, "frames")
+CSV_DIR = os.path.join(MATCH_DIR, "Labels.csv")
+
+if(not os.path.exists(MATCH_DIR)):
+    print("\nERROR: The following directory does not exist: " + str(MATCH_DIR))
+    exit(1)
+
+if(not os.path.exists(FRAMES_DIR)):
+    print("\nERROR: The following directory does not exist: " + str(FRAMES_DIR))
+    exit(1)
+
 
 class ImageViewer(QMainWindow):
     def __init__(self):
@@ -224,7 +235,7 @@ class ImageViewer(QMainWindow):
                 print(str(self.images[i].split('/')[-1]) + " is not annotated.")
 
         if(allAnnotated):
-            with open(str(FRAMES_DIR + "/Labels.csv"), "w") as f:
+            with open(CSV_DIR, "w") as f:
                 writer = csv.writer(f)
                 writer.writerow(["Frame", "Visibility", "X", "Y"])
                 indices = list(range(0,len(self.pixelCoordinates)))
