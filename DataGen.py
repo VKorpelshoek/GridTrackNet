@@ -127,6 +127,10 @@ def isValInstance():
 
 numMatchFolders = len([f for f in os.listdir(INPUT_DIR) if os.path.isdir(os.path.join(INPUT_DIR, f)) and f.startswith("match")])
 
+if(not numMatchFolders >= 1):
+    print("\nERROR: No folders starting with 'match' were found in directory: " + str(INPUT_DIR))
+    exit(1)
+
 if(not os.path.exists(EXPORT_DIR)):
     os.mkdir(EXPORT_DIR)
 
@@ -139,9 +143,15 @@ valWriter = tf.io.TFRecordWriter(valFileName)
 #Loops through all match folders' images and annotations and stores generated instances in TFRecord files
 for m in range(1, numMatchFolders+1):
     matchPath = os.path.join(INPUT_DIR, "match" + str(m))
+    if(not os.path.exists(matchPath)):    
+        print("\nERROR: The following directory does not exist: " + str(matchPath))
+        exit(1)
     for framesFolder in os.listdir(matchPath):
         frames_path = os.path.join(matchPath, framesFolder)
         if framesFolder == 'frames':
+            if(not os.path.exists(os.path.join(frames_path, 'Labels.csv'))):    
+                print("\nERROR: No 'Labels.cvs' file found at path: " + str(os.path.join(frames_path, 'Labels.csv')))
+                exit(1)
             with open(os.path.join(frames_path, 'Labels.csv')) as csvfile:
                 reader = csv.DictReader(csvfile)
                 readerList = list(reader)
@@ -156,7 +166,9 @@ for m in range(1, numMatchFolders+1):
                     for j in range(0,IMGS_PER_INSTANCE):
                         imgPath = os.path.join(frames_path, str(int(readerList[i+j]['Frame'])) + '.png')
 
-                        assert(os.path.exists(imgPath))
+                        if(not os.path.exists(imgPath)):    
+                            print("\nERROR: Image not found at path: " + str(imgPath))
+                            exit(1)
 
                         img = load_img(imgPath)
                         img = img_to_array(img)
