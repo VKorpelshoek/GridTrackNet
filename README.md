@@ -5,14 +5,18 @@ A Tensorflow implementation of GridTrackNet for real time tennis ball tracking; 
 
 Official paper: **LINK TO PAPER**
 
-Based on TrackNet: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
+Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
+
+
+## VIDEO EXAMPLE
+
 
 ## Main changes to TrackNetv2
 1. Removed upsampling layers: output consists of three 48x27 grids per frame: confidence grid, x-offset grid, and y-offset grid.
 2. 5 input frames and 5 output frames
 3. Increased input resolution from 512x288 to 768x432
 
-## GridTrackNet vs TrackNetv2 Comparison:
+### GridTrackNet vs TrackNetv2 Comparison:
 
 |Metric|TrackNetv2|**GridTrackNet**|   
 |---------|-----|-----|
@@ -23,6 +27,8 @@ Based on TrackNet: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 |Precision|0.8721|**NEW VAL**|
 |Recall|0.8386|**NEW VAL**|
 |F1|0.8550|**NEW VAL**|
+
+Note: metrics were computed only once on a separate test dataset.
 
 ### Formulas
 Accuracy = (TP + TN) / (TP + TN + FP1 + FP2 + FN)
@@ -43,6 +49,59 @@ FP1 (False Positive Type 1): when the model correctly predicts the presence of a
 FP2 (False Positive Type 2): when the model incorrectly predicts the presence of a ball within a frame while there is no ball visible. 
 
 FN (False Negative): when the model incorrectly predicts the absence of a ball within a frame while there is a ball visible. 
+
+## Setup
+HERE IS HOW TO SETUP
+
+## Inference API / Video
+ADD HERE THE API FOR THE INFERENCE OR VIDEO GENERATION
+
+## Labelling Tool
+Here is how to label the data.
+
+## Dataset Generation
+The dataset consists of x images from 81 different tennis video's, combined into x training instances and x validation instances. 
+
+Link: ....
+
+Example usage:
+```bash
+python "/path/to/DataGen.py" --input_dir="path/to/your/folder/containing/matchX/data" --export_dir="path/to/your/export/folder" --val_split=0.2 --augment_data=1 --next_img_index=2
+```
+Accepted arguments:
+```bash
+
+  -h, --help            show this help message and exit
+  --input_dir INPUT_DIR (required)
+                        Input directory of the folder containing all folders
+                        with names with the prefix 'match'.
+  --export_dir EXPORT_DIR (required)
+                        Export directory where the data will be saved.
+  --augment_data {0,1} (optional) 
+                        Boolean indicating whether or not the data should be
+                        augmented as well (flipped horizontally). 1 for
+                        augmentations, 0 for no augmentations. No augmented
+                        versions will be used as validation instances. Default
+                        = 1
+  --val_split VAL_SPLIT (optional)
+                        Fraction of instances to be used for validation: must
+                        be greater than 0.0 and less than 1.0. Note this only
+                        affects the validation:non-augmented-data ratio, not
+                        the total validation:train-instances ratio. Default =
+                        0.2
+  --=next_img_index {1,2,3,4,5} (optional)
+                        Specifies the overlap of images between instances;
+                        specifically the integer to be used for selecting the
+                        index of the first image of the next instance relative
+                        to the index of the first image of the previous
+                        instance. For example, if set to 2, the first instance
+                        will contain images with indices [0,1,2,3,4] and the
+                        second instance will contain images with indices
+                        [2,3,4,5,6].Default = 2
+```
+
+
+## Training
 
 
 ## Architecture
@@ -66,6 +125,12 @@ Adapted version of the VGG16 model.
 |15|Conv2D|512|3x3|ReLU + Batch Norm.|48 x 27|
 |16|Conv2D|512|3x3|ReLU + Batch Norm.|48 x 27|
 |**17**|**Conv2D**|**15**|**3x3**|**Sigmoid**|**48 x 27**|
+
+
+
+
+
+
 
 
 
