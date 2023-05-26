@@ -22,23 +22,25 @@ Based on TrackNet: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 |Recall|0.8386|**NEW VAL**|
 |F1|0.8550|**NEW VAL**|
 
+### Formulas
 Accuracy = (TP + TN) / (TP + TN + FP1 + FP2 + FN)
 
 Precision = TP / (TP + FP1 + FP2)
 
 Recall = TP / (TP + FN)
 
-F1 = (2*(Precision*Recall))/(Precision + Recall)
+F1 = (2*(Precision*Recall)) / (Precision + Recall)
 
-TP (True Positive): when predicted ball location is less than 4 pixels from true ball location.
+### Formula Variable Definitions
+TP (True Positive): when the model correctly predicts the location of a ball within a frame being less than 4 pixels from the true ball location.
 
-TN (True Negative): when the model correctly predicts no ball in a frame.
+TN (True Negative): when the model correctly predicts no ball visible within a frame.
 
-FP1 (False Positive Type 1): when the model correctly predicts the presence of a ball within a frame, but outside the tolerance value of 4 pixels.
+FP1 (False Positive Type 1): when the model correctly predicts the presence of a ball within a frame, but outside the tolerance value of 4 pixels from the true ball location.
 
-FP2 (False Positive Type 2): when the model predicts the presence of a ball within a frame while there is no ball visible. 
+FP2 (False Positive Type 2): when the model incorrectly predicts the presence of a ball within a frame while there is no ball visible. 
 
-FN (False Negative): when the model fails to make a prediction in a frame while it should have.
+FN (False Negative): when the model incorrectly predicts the absence of a ball within a frame while there is a ball visible. 
 
 
 ## Architecture
