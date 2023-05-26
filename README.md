@@ -54,15 +54,15 @@ Also installation of cuda
 ADD HERE THE API FOR THE INFERENCE OR VIDEO GENERATION
 
 ## Custom Training Guide
-1. Per video, use the frame extractor to save all frames inside a folder.
-2. Per frames folder, label the balls.
-3. After all frames have been annotated, use the DataGen.py
+1. Per video, use FramGenerator.py to extract individual frames from a video.
+2. Per match folder, use LabellingTool.py to label all frames.
+3. After all match folders are annotated, use the DataGen.py to generate the dataset in TFRecord format.
 4. Train
 5. Inference
 
 Resulting Dataset Folder Structure:
 ```
-Tennis Dataset
+Dataset
 |   
 |___match1    
 |       |    
@@ -97,15 +97,14 @@ Tennis Dataset
 |       |____ Labels.csv
 ```  
 
-### Frame extractor
-Outputs individual frames with resolution 1280x720 from an input video.
+### Frame Generator
+Outputs individual frames with 1280x720 resolution from an input video.
 
 Note: input video format must .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with 'matchX', where X is an index (first index is 1.) 
 
-
 Example usage:
 ```bash
-python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir="path/to/folder/matchX"
+python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir="path/to/Dataset/matchX"
 ```   
 
 ### Labelling Tool
@@ -115,7 +114,7 @@ Note: you can only save the annotations when all frames have been annotated with
 
 Example usage:
 ```bash
-python "/path/to/LabellingTool.py" --frames_dir="path/to/folder/matchX/frames/"
+python "/path/to/LabellingTool.py" --frames_dir="path/to/Dataset/matchX/frames/"
 ```   
 
 Controls:
