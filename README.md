@@ -46,10 +46,28 @@ Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 pip install -r requirements.txt
 ```
 
-## Inference API / Video
-ADD HERE THE API FOR THE INFERENCE OR VIDEO GENERATION
-Output path is same as video
+## Inference API
 
+### API
+```bash 
+Predict.getPredictions(frames, isBGRFormat = False)
+```
+
+Receives as input a list of frames (number of frames should be a multiple of 5), and outputs a list of pixel coordinates for each input frame. If no ball was detected, the model returns coordinate (0,0). In case the frames are in BGR format (such as when using OpenCV), specify this with the isBGRFormat argument.
+
+### Video Output
+Receives as input a video and outputs the same video with either a ball trail using argument *--display_trail=1*, or a single circle around the detected ball location using argument *--display_trail=0*. If
+
+Example usage:
+```bash
+python /path/to/Predict.py --video_dir="/path/to/video.mp4" --model_dir="/path/to/model_weights.h5" --display_trail=1
+``` 
+
+|argument|Event|  
+|-----|----|
+|video_dir (required) | Path to .mp4 video|
+|model_dir (optional) | Path to model_weights.h5 file for loading a custom model|
+|display_trail (optional) | Displays a trail of the ball trajectory. If set to 0, only a red circle around the predicted ball location is displayd on each frame.|
 ## Custom Training Guide
 1. Per video, use FrameGenerator.py to extract individual frames from a video.
 2. Per match folder, use LabellingTool.py to label all frames.
