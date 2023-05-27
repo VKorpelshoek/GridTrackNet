@@ -13,10 +13,8 @@ GRID_ROWS = 27
 GRID_SIZE_COL = WIDTH/GRID_COLS
 GRID_SIZE_ROW = HEIGHT/GRID_ROWS
 
-model = GridTrackNet(IMGS_PER_INSTANCE, HEIGHT, WIDTH)
-
 MODEL_DIR = os.path.join(os.getcwd(),"model_weights.h5")
-
+model = GridTrackNet(IMGS_PER_INSTANCE, HEIGHT, WIDTH)
 model.load_weights(MODEL_DIR)
 
 def getPredictions(frames, isBGRFormat = False):
@@ -101,7 +99,6 @@ if __name__ == "__main__":
         numFramesSkip = 2
     elif (fps >=22 and fps <= 32):
         numFramesSkip = 1
-   # numFramesSkip = (int(fps) // 30)
     
     totalFrames = (int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) // numFramesSkip)
 
@@ -140,8 +137,8 @@ if __name__ == "__main__":
                 for i, frame in enumerate(frames):
                     if(len(ballCoordinatesHistory) >= 15):
                         for j in range(7,-1,-2):
-                            tempIdx = len(ballCoordinatesHistory)-5-j+i
-                            cv2.circle(frame, ballCoordinatesHistory[tempIdx], 4, (0, 255, 255),-1)
+                            idx = len(ballCoordinatesHistory)-5-j+i
+                            cv2.circle(frame, ballCoordinatesHistory[idx], 4, (0, 255, 255),-1)
 
                     video_writer.write(frame)
 

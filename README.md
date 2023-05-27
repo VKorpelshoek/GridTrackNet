@@ -23,7 +23,7 @@ Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
 ### GridTrackNet vs TrackNetv2 Comparison:
 
-|Metric|TrackNetv2|**GridTrackNet**|   
+||TrackNetv2|**GridTrackNet**|   
 |---------|-----|-----|
 |Input/output frames|3/3| **5/5**|
 |Input resolution|512 x 288| **768 x 432**|
@@ -48,6 +48,7 @@ pip install -r requirements.txt
 
 ## Inference API / Video
 ADD HERE THE API FOR THE INFERENCE OR VIDEO GENERATION
+Output path is same as video
 
 ## Custom Training Guide
 1. Per video, use FrameGenerator.py to extract individual frames from a video.
