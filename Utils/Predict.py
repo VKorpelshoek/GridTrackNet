@@ -8,9 +8,15 @@ from GridTrackNet import GridTrackNet
 WIDTH = 768
 HEIGHT = 432
 IMGS_PER_INSTANCE = 5
-MODEL_DIR = os.path.join(os.getcwd(),"model_weights.h5")
+GRID_COLS = 48
+GRID_ROWS = 27
+GRID_SIZE_COL = WIDTH/GRID_COLS
+GRID_SIZE_ROW = HEIGHT/GRID_ROWS
 
 model = GridTrackNet(IMGS_PER_INSTANCE, HEIGHT, WIDTH)
+
+MODEL_DIR = os.path.join(os.getcwd(),"model_weights.h5")
+
 model.load_weights(MODEL_DIR)
 
 def getPredictions(frames, isBGRFormat = False):
@@ -35,38 +41,36 @@ def getPredictions(frames, isBGRFormat = False):
     units /= 255
 
     y_pred = model(units)
+    
+    y_pred = np.split(y_pred, IMGS_PER_INSTANCE, axis=1)
+    y_pred = np.stack(y_pred, axis=2)
+    y_pred = np.moveaxis(y_pred, 1, -1)
+
+    confGrid, xOffsetGrid, yOffsetGrid = np.split(y_pred, 3, axis=-1)
+
+    confGrid = np.squeeze(confGrid, axis=-1)
+    xOffsetGrid = np.squeeze(xOffsetGrid, axis=-1)
+    yOffsetGrid = np.squeeze(yOffsetGrid, axis=-1)
+
     ballCoordinates = []
+    for i in range(0, confGrid.shape[0]):
+        for j in range(0, confGrid.shape[1]):
+            currConfGrid = confGrid[i][j]
+            currXOffsetGrid = xOffsetGrid[i][j]
+            currYOffsetGrid = yOffsetGrid[i][j]
 
-    split_data = np.split(y_pred, 5, axis=1)
-    result = np.stack(split_data, axis=2)
-    y_pred = np.moveaxis(result, 1, -1)
-
-    y_pred_conf, y_pred_x, y_pred_y = np.split(y_pred, 3, axis=-1)
-
-    y_pred_conf = np.squeeze(y_pred_conf, axis=-1)
-    y_pred_x = np.squeeze(y_pred_x, axis=-1)
-    y_pred_y = np.squeeze(y_pred_y, axis=-1)
-
-    for i in range(0, y_pred_conf.shape[0]):
-        for j in range(0, y_pred_conf.shape[1]):
-            pred_confidence_grid = y_pred_conf[i][j]
-            pred_x_offset_grid = y_pred_x[i][j]
-            pred_y_offset_grid = y_pred_y[i][j]
-
-            pred_max_confidence_value = np.max(pred_confidence_grid)
-            pred_row, pred_col = np.unravel_index(np.argmax(pred_confidence_grid), pred_confidence_grid.shape)
+            maxConfVal = np.max(currConfGrid)
+            predRow, predCol = np.unravel_index(np.argmax(currConfGrid), currConfGrid.shape)
 
             threshold = 0.5
-            predHasBall = pred_max_confidence_value >= threshold
+            predHasBall = maxConfVal >= threshold
 
-            y_pred_x_offset = pred_x_offset_grid[pred_row][pred_col]
-            y_pred_y_offset = pred_y_offset_grid[pred_row][pred_col]
+            xOffset = currXOffsetGrid[predRow][predCol]
+            yOffset = currYOffsetGrid[predRow][predCol]
 
-            GRID_SIZE_COL = WIDTH/48
-            GRID_SIZE_ROW = HEIGHT/27
+            xPred = int((xOffset + predCol) * GRID_SIZE_COL)
+            yPred = int((yOffset + predRow) * GRID_SIZE_ROW)
 
-            xPred = int((y_pred_x_offset + pred_col) * GRID_SIZE_COL)
-            yPred = int((y_pred_y_offset + pred_row) * GRID_SIZE_ROW)
             if(predHasBall):
                 ballCoordinates.append((int((xPred/WIDTH)*outputWidth), int((yPred/HEIGHT)*outputHeight)))
             else:

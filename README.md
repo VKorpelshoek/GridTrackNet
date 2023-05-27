@@ -14,14 +14,12 @@ Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
   <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
 </p>
 
-### Main improvements to TrackNetv2
-1. Faster inference: output consists of three 48x27 grids per frame: confidence grid, x-offset grid, and y-offset grid.
-2. 5 input frames and 5 output frames
-3. Increased input resolution from 512x288 to 768x432
+*Training data consisted mainly of inhomogeneous amature footage as well as professional TV broadcasts.*
 
-Disclaimer: some parts of the source code have been developed in assistance with ChatGPT and, even though unlikely, might contain unexpected behavior at times.
-
-
+### Main changes to TrackNetv2
+1. Output head consists of three 48x27 grids per frame instead of full-sized resolution heatmaps for XX% faster inference speeds.
+2. 5 input frames and 5 output frames for enhanced temporal information.
+3. Increased input resolution from 512x288 to 768x432 for improved detection on small tennis balls. 
 
 ### GridTrackNet vs TrackNetv2 Comparison:
 
@@ -36,13 +34,14 @@ Disclaimer: some parts of the source code have been developed in assistance with
 |Recall|0.8386|**NEW VAL**|
 |F1|0.8550|**NEW VAL**|
 
-Note: metrics were computed only once on a separate test dataset.
+*Note: metrics were computed only once on a separate test dataset. The test dataset contained only amature match footage.*
 
 ### Formulas
 - Accuracy = $\dfrac{TP + TN}{TP + TN + FP1 + FP2 + FN}$
 - Precision = $\dfrac{TP}{TP + FP1 + FP2}$
 - Recall = $\dfrac{TP}{TP + FN}$
 - F1 = $\dfrac{2*(Precision * Recall)}{Precision + Recall}$
+
 
 ### Formula Variable Definitions
 - TP (True Positive): when the model correctly predicts the location of a ball within a frame being less than 4 pixels from the true ball location.
@@ -62,7 +61,7 @@ Also installation of cuda
 ADD HERE THE API FOR THE INFERENCE OR VIDEO GENERATION
 
 ## Custom Training Guide
-1. Per video, use FramGenerator.py to extract individual frames from a video.
+1. Per video, use FrameGenerator.py to extract individual frames from a video.
 2. Per match folder, use LabellingTool.py to label all frames.
 3. After all match folders are annotated, use the DataGen.py to generate the dataset in TFRecord format.
 4. Train
@@ -215,8 +214,12 @@ Adapted version of the VGG16 model.
 |**17**|**Conv2D**|**15**|**3x3**|**Sigmoid**|**48 x 27**|
 
 
+## References
+1.
+2.
+3.
 
-
+*Disclaimer: some parts of the source code have been developed in assistance with ChatGPT and, even though unlikely, might contain unexpected behavior at times.*
 
 
 
