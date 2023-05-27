@@ -7,7 +7,12 @@ A Tensorflow implementation of GridTrackNet for real time tennis ball tracking; 
 
 Official paper: **LINK TO PAPER**
 
-Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
+Originally based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
+
+### Main improvements
+1. 🚀 Ultra-efficient architecture for X FPS (+X% to TrackNetv2)
+2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection on small tennis balls
+3. 📺 5 input frames and 5 output frames for enhanced temporal information
 
 <p align="center">
   <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
@@ -15,10 +20,6 @@ Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
 *Training data consisted mainly of diverse amature footage as well as professional TV broadcasts.*
 
-### Main improvements
-1. 🚀 Ultra-efficient architecture for X FPS (+X% to TrackNetv2)
-2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection on small tennis balls
-3. 📺 5 input frames and 5 output frames for enhanced temporal information
 
 ### GridTrackNet vs TrackNetv2 Comparison:
 
