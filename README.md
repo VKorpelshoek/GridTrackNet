@@ -46,7 +46,7 @@ Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 pip install -r requirements.txt
 ```
 
-## Inference API
+## Inference
 
 ### API
 ```bash 
@@ -56,31 +56,39 @@ Predict.getPredictions(frames, isBGRFormat = False)
 Receives as input a list of frames (number of frames should be a multiple of 5), and outputs a list of pixel coordinates for each input frame. If no ball was detected, the model returns coordinate (0,0). In case the frames are in BGR format (such as when using OpenCV), specify this with the isBGRFormat argument.
 
 ### Video Output
-Receives as input a video and outputs the same video with either a ball trail using argument *--display_trail=1*, or a single circle around the detected ball location using argument *--display_trail=0*. If
+Receives as input a video and outputs the same video predicted ball locations.
 
 Example usage:
 ```bash
 python /path/to/Predict.py --video_dir="/path/to/video.mp4" --model_dir="/path/to/model_weights.h5" --display_trail=1
 ``` 
 
-|argument|Event|  
+|Argument|Event|  
 |-----|----|
 |video_dir (required) | Path to .mp4 video|
-|model_dir (optional) | Path to model_weights.h5 file for loading a custom model|
+|model_dir (optional) | Path to *model_weights.h5* file for loading a custom model|
 |display_trail (optional) | Displays a trail of the ball trajectory. If set to 0, only a red circle around the predicted ball location is displayd on each frame.|
 ## Custom Training Guide
-1. Per video, use FrameGenerator.py to extract individual frames from a video.
-2. Per match folder, use LabellingTool.py to label all frames.
-3. After all match folders are annotated, use the DataGen.py to generate the dataset in TFRecord format.
-4. Train
-5. Inference
+1. For each video, use *FrameGenerator.py* to extract individual frames from a video.
+2. For each match folder, use *LabellingTool.py* to label all frames.
+3. After annotating all data, use *DataGen.py* to generate the dataset in TFRecord format.
+4. Train the model using *Train.py*
+5. Inference on your custom model using *Predict.py* by specifying the path to the saved .h5 file with the argument *--model_dir*
 
 Resulting Sample Dataset Folder Structure:
 ```
 Dataset
 |   
 |___match1    
-|       |    
+|       |___ frames
+|       |     |___0.png
+|       |     |___1.png
+|       |     |...
+|       |     |___x.png
+|       |
+|       |____ Labels.csv   
+|
+|___match2     
 |       |___ frames
 |       |     |___0.png
 |       |     |___1.png
@@ -88,21 +96,9 @@ Dataset
 |       |     |___x.png
 |       |
 |       |____ Labels.csv
-|     
-|___match2    
-|       |    
-|       |___ frames
-|       |     |___0.png
-|       |     |___1.png
-|       |     |...
-|       |     |___x.png
-|       |
-|       |____ Labels.csv
-| 
 |...
 |
-|___matchX    
-|       |    
+|___matchX     
 |       |___ frames
 |       |     |___0.png
 |       |     |___1.png
@@ -110,7 +106,7 @@ Dataset
 |       |     |___x.png
 |       |
 |       |____ Labels.csv
-
+|
 |___TFRecordFiles    
 |       |___train0.tfrecord
 |       |___train1.tfrecord
@@ -130,13 +126,13 @@ python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir
 ```   
 
 ### Labelling Tool
-Outputs a Labels.csv file in the /matchX/frames folder containing the pixel coordinate and visibility per frame.
+Outputs a *Labels.csv* file containing the pixel coordinates of the ball and visibility per frame.
 
-Note: you can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. It is advised to use a mouse with a scroll wheel for zooming capabilities. For faster annotation speeds, the next frame is automatically loaded after annotating the previous frame.
+Note: you can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. It is advised to use a mouse with a scroll wheel for zooming capabilities. Note that, for faster annotation speeds, the next frame is automatically loaded after annotating the previous frame.
 
 Example usage:
 ```bash
-python "/path/to/LabellingTool.py" --frames_dir="path/to/Dataset/matchX/frames/"
+python "/path/to/LabellingTool.py" --frames_dir="path/to/Dataset/matchX"
 ```   
 
 Controls:
@@ -155,16 +151,14 @@ Controls:
 
 
 ### Dataset Generation
-The dataset consists of x images from 81 different tennis video's, combined into x training instances and x validation instances. 
-
-Link: ....
+Original Dataset Link: ....
 
 Example usage:
 ```bash
 python "/path/to/DataGen.py" --input_dir="path/to/your/matches/folder" --export_dir="path/to/your/export/folder" --val_split=0.2 --augment_data=1 --next_img_index=2
 ```
 Accepted arguments:
-|argument|Event|  
+|Argument|Event|  
 |-----|----|
 |input_dir (required)|Input directory of the folder containing all folders with names with the prefix 'match'.
 |export_dir (required)| Export directory where the data will be saved.
@@ -179,7 +173,7 @@ Accepted arguments:
 python "/path/to/Train.py" --data_dir="path/to/tfrecord/files" --save_weights="path/to/your/export/folder" --epochs=50 --tol=4
 ```
 Accepted arguments:
-|argument|Event|  
+|Argument|Event|  
 |-----|----|
 |data_dir (required)|Data directory of the folder containing all folders with names with the prefix 'match'.
 |load_weights (optional)|Directory to load pre-trained weights.
