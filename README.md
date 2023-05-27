@@ -17,9 +17,9 @@ Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 *Training data consisted mainly of diverse amature footage as well as professional TV broadcasts.*
 
 ### Main improvements
-1. 🚀 Removed upsampling layers for X% faster inference
-2. 🚀 5 input frames and 5 output frames for enhanced temporal information
-3. 🚀 Increased input resolution from 512x288 to 768x432 for improved detection on small objects
+1. 🚀 Ultra-efficient architecture for X FPS (+X% to TrackNetv2)
+2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection on small tennis balls
+3. 📺 5 input frames and 5 output frames for enhanced temporal information
 
 ### GridTrackNet vs TrackNetv2 Comparison:
 
@@ -29,12 +29,12 @@ Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 |Input resolution|512 x 288| **768 x 432**|
 |Output resolution|512 x 288| **48 x 27**|
 |Inference speed|FPS ON 3080|**FPS ON 3080**|
-|Accuracy|0.7501|**NEW VAL**|
-|Precision|0.8721|**NEW VAL**|
-|Recall|0.8386|**NEW VAL**|
-|F1|0.8550|**NEW VAL**|
+|Accuracy|**OLD VAL**|**NEW VAL**|
+|Precision|**OLD VAL**|**NEW VAL**|
+|Recall|**OLD VAL**|**NEW VAL**|
+|F1|**OLD VAL**|**NEW VAL**|
 
-*Note: metrics were computed only once on a separate test dataset. The test dataset contained only amature match footage.*
+*Note: metrics were computed only once on a separate test dataset. *
 
 ## Setup
 1. Follow the complete Tensorflow installation guide for the installation on your system and how to enable hardware acceleration.

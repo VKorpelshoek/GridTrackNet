@@ -123,6 +123,7 @@ GLOBAL_ACCURACY = 0
 GLOBAL_PRECISION = 0
 GLOBAL_RECALL = 0
 GLOBAL_F1 = 0
+
 #Helper function to compute training metrics from the statistics
 def accuracy(y_true, y_pred):
 	global GLOBAL_ACCURACY
@@ -282,14 +283,14 @@ for epoch in range(EPOCHS):
 	history = model.fit(dataset, epochs=1, steps_per_epoch=stepsPerEpoch, verbose=1)
 
 	model_save_path = os.path.join(SAVE_WEIGHTS, "epoch_" + str(epoch+1) + ".h5")
-	model.SAVE_WEIGHTS(model_save_path)
+	model.save_weights(model_save_path)
 
 	values = list(history.history.values())
 
 	print(f"\nEvaluating epoch {epoch + 1}/{EPOCHS}")
-	val_loss, val_accuracy, val_precision, val_recall, val_f1 = model.evaluate(valData, verbose=1)
+	valLoss, valAccuracy, valPrecision, valRecall, valF1 = model.evaluate(valData, verbose=1)
 
-	writer.writerow([epoch+1, round(values[0][0], 6), round(val_loss, 6), round(values[1][0], 6), round(val_accuracy, 6), round(values[2][0], 6), round(val_precision, 6), round(values[3][0], 6), round(val_recall, 6), round(values[4][0], 6), round(val_f1, 6),])
+	writer.writerow([epoch+1, round(values[0][0], 6), round(valLoss, 6), round(values[1][0], 6), round(valAccuracy, 6), round(values[2][0], 6), round(valPrecision, 6), round(values[3][0], 6), round(valRecall, 6), round(values[4][0], 6), round(valF1, 6),])
 	f.flush()
 
 print('\nDone.')
