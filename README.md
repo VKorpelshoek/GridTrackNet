@@ -10,7 +10,7 @@ Official paper: **LINK TO PAPER**
 Originally based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
 ### Main improvements
-1. 🚀 Ultra-efficient architecture for X FPS (+X% to TrackNetv2)
+1. 🚀 Ultra-efficient custom architecture for X FPS (+X% to TrackNetv2)
 2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection on small tennis balls
 3. 📺 5 input frames and 5 output frames for enhanced temporal information
 
@@ -42,32 +42,33 @@ Originally based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/Track
       - Mac: https://developer.apple.com/metal/tensorflow-plugin/
 
 2. In your virtual environment (Conda, Miniforge, etc.), run 
-```bash
+```commandline
 pip install -r requirements.txt
 ```
 
 ## Inference
-
-### API
-```bash 
-Predict.getPredictions(frames, isBGRFormat = False)
-```
-
-Receives as input a list of frames (number of frames should be a multiple of 5), and outputs a list of pixel coordinates for each input frame. If no ball was detected, the model returns coordinate (0,0). In case the frames are in BGR format (such as when using OpenCV), specify this with the isBGRFormat argument.
-
 ### Video Output
 Receives as input a video and outputs the same video predicted ball locations.
 
 Example usage:
-```bash
+```commandline
 python /path/to/Predict.py --video_dir="/path/to/video.mp4" --model_dir="/path/to/model_weights.h5" --display_trail=1
 ``` 
+
+
 
 |Argument|Event|  
 |-----|----|
 |video_dir (required) | Path to .mp4 video|
 |model_dir (optional) | Path to *model_weights.h5* file for loading a custom model|
 |display_trail (optional) | Displays a trail of the ball trajectory. If set to 0, only a red circle around the predicted ball location is displayd on each frame.|
+
+### API
+```commandline 
+Predict.getPredictions(frames, isBGRFormat = False)
+```
+
+Receives as input a list of frames (number of frames should be a multiple of 5), and outputs a list of pixel coordinates for each input frame. If no ball was detected, the model returns coordinate (0,0). In case the frames are in BGR format (such as when using OpenCV), specify this with the isBGRFormat argument.
 ## Custom Training Guide
 1. For each video, use *FrameGenerator.py* to extract individual frames from a video.
 2. For each match folder, use *LabellingTool.py* to label all frames.
@@ -121,7 +122,7 @@ Outputs individual frames with 1280x720 resolution from an input video.
 Note: input video format must be .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with 'matchX', where X is an index (first index is 1.) 
 
 Example usage:
-```bash
+```commandline
 python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir="path/to/Dataset/matchX"
 ```   
 
@@ -131,7 +132,7 @@ Outputs a *Labels.csv* file containing the pixel coordinates of the ball and vis
 Note: you can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. It is advised to use a mouse with a scroll wheel for zooming capabilities. Note that, for faster annotation speeds, the next frame is automatically loaded after annotating the previous frame.
 
 Example usage:
-```bash
+```commandline
 python "/path/to/LabellingTool.py" --frames_dir="path/to/Dataset/matchX"
 ```   
 
@@ -154,7 +155,7 @@ Controls:
 Original Dataset Link: ....
 
 Example usage:
-```bash
+```commandline
 python "/path/to/DataGen.py" --input_dir="path/to/your/matches/folder" --export_dir="path/to/your/export/folder" --val_split=0.2 --augment_data=1 --next_img_index=2
 ```
 Accepted arguments:
@@ -169,7 +170,7 @@ Accepted arguments:
 
 
 ### Training
-```bash
+```commandline
 python "/path/to/Train.py" --data_dir="path/to/tfrecord/files" --save_weights="path/to/your/export/folder" --epochs=50 --tol=4
 ```
 Accepted arguments:
