@@ -14,12 +14,12 @@ Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
   <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
 </p>
 
-*Training data consisted mainly of inhomogeneous amature footage as well as professional TV broadcasts.*
+*Training data consisted mainly of diverse amature footage as well as professional TV broadcasts.*
 
-### Main changes to TrackNetv2
-1. Output head consists of three 48x27 grids per frame instead of full-sized resolution heatmaps for XX% faster inference speeds.
-2. 5 input frames and 5 output frames for enhanced temporal information.
-3. Increased input resolution from 512x288 to 768x432 for improved detection on small tennis balls. 
+### Main improvements
+1. 🚀 Removed upsampling layers for X% faster inference
+2. 🚀 5 input frames and 5 output frames for enhanced temporal information
+3. 🚀 Increased input resolution from 512x288 to 768x432 for improved detection on small objects
 
 ### GridTrackNet vs TrackNetv2 Comparison:
 
@@ -36,26 +36,15 @@ Based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
 *Note: metrics were computed only once on a separate test dataset. The test dataset contained only amature match footage.*
 
-### Formulas
-- Accuracy = $\dfrac{TP + TN}{TP + TN + FP1 + FP2 + FN}$
-- Precision = $\dfrac{TP}{TP + FP1 + FP2}$
-- Recall = $\dfrac{TP}{TP + FN}$
-- F1 = $\dfrac{2*(Precision * Recall)}{Precision + Recall}$
-
-
-### Formula Variable Definitions
-- TP (True Positive): when the model correctly predicts the location of a ball within a frame being less than 4 pixels from the true ball location.
-- TN (True Negative): when the model correctly predicts no ball visible within a frame.
-- FP1 (False Positive Type 1): when the model correctly predicts the presence of a ball within a frame, but outside the tolerance value of 4 pixels from the true ball location.
-- FP2 (False Positive Type 2): when the model incorrectly predicts the presence of a ball within a frame while there is no ball visible. 
-- FN (False Negative): when the model incorrectly predicts the absence of a ball within a frame while there is a ball visible. 
-
-
-
-
 ## Setup
-HERE IS HOW TO SETUP requirements.txt
-Also installation of cuda
+1. Follow the complete Tensorflow installation guide for the installation on your system and how to enable hardware acceleration.
+      - Linux/Windows: https://www.tensorflow.org/install/pip
+      - Mac: https://developer.apple.com/metal/tensorflow-plugin/
+
+2. In your virtual environment (Conda, Miniforge, etc.), run 
+```bash
+pip install -r requirements.txt
+```
 
 ## Inference API / Video
 ADD HERE THE API FOR THE INFERENCE OR VIDEO GENERATION
@@ -158,11 +147,11 @@ python "/path/to/DataGen.py" --input_dir="path/to/your/matches/folder" --export_
 Accepted arguments:
 |argument|Event|  
 |-----|----|
-|--input_dir (required)|Input directory of the folder containing all folders with names with the prefix 'match'.
-|--export_dir (required)| Export directory where the data will be saved.
-|--augment_data {0,1} (optional) | Boolean indicating whether or not the data should be augmented as well (flipped horizontally). 1 for augmentations, 0 for no augmentations. No augmented versions will be used as validation instances. Default = 1
-|--val_split (optional)|Fraction of instances to be used for validation: must be greater than 0.0 and less than 1.0. Note this only affects the validation:non-augmented-data ratio, not the total validation:train-instances ratio. Default = 0.2
-|--next_img_index (optional)|Specifies the overlap of images between instances; specifically the integer to be used for selecting the index of the first image of the next instance relative to the index of the first image of the previous instance. For example, if set to 2, the first instance will contain images with indices [0,1,2,3,4] and the second instance will contain images with indices [2,3,4,5,6]. Default = 2
+|input_dir (required)|Input directory of the folder containing all folders with names with the prefix 'match'.
+|export_dir (required)| Export directory where the data will be saved.
+|augment_data {0,1} (optional) | Boolean indicating whether or not the data should be augmented as well (flipped horizontally). 1 for augmentations, 0 for no augmentations. No augmented versions will be used as validation instances. Default = 1
+|val_split (optional)|Fraction of instances to be used for validation: must be greater than 0.0 and less than 1.0. Note this only affects the validation:non-augmented-data ratio, not the total validation:train-instances ratio. Default = 0.2
+|next_img_index (optional)|Specifies the overlap of images between instances; specifically the integer to be used for selecting the index of the first image of the next instance relative to the index of the first image of the previous instance. For example, if set to 2, the first instance will contain images with indices [0,1,2,3,4] and the second instance will contain images with indices [2,3,4,5,6]. Default = 2
 
 
 
@@ -173,11 +162,11 @@ python "/path/to/Train.py" --data_dir="path/to/tfrecord/files" --save_weights="p
 Accepted arguments:
 |argument|Event|  
 |-----|----|
-|--data_dir (required)|Data directory of the folder containing all folders with names with the prefix 'match'.
-|--load_weights (optional)|Directory to load pre-trained weights.
-|--save_weights (required)|Directory to store model weights and training metrics.
-|--epochs (required)|Number of epochs (iterations of the training data) the model should be trained for.|
-|--tol (optional)|Specifies the tolerance of the model: the number of pixels the predicted location is allowed to deviate from the true location. Default = 4
+|data_dir (required)|Data directory of the folder containing all folders with names with the prefix 'match'.
+|load_weights (optional)|Directory to load pre-trained weights.
+|save_weights (required)|Directory to store model weights and training metrics.
+|epochs (required)|Number of epochs (iterations of the training data) the model should be trained for.|
+|tol (optional)|Specifies the tolerance of the model: the number of pixels the predicted location is allowed to deviate from the true location. Default = 4
 
 
 ## Architecture
@@ -202,6 +191,19 @@ Adapted version of the VGG16 model.
 |16|Conv2D|512|3x3|ReLU + Batch Norm.|48 x 27|
 |**17**|**Conv2D**|**15**|**3x3**|**Sigmoid**|**48 x 27**|
 
+## Formulas
+- Accuracy = $\dfrac{TP + TN}{TP + TN + FP1 + FP2 + FN}$
+- Precision = $\dfrac{TP}{TP + FP1 + FP2}$
+- Recall = $\dfrac{TP}{TP + FN}$
+- F1 = $\dfrac{2*(Precision * Recall)}{Precision + Recall}$
+
+
+### Formula Variable Definitions
+- TP (True Positive): when the model correctly predicts the location of a ball within a frame being less than 4 pixels from the true ball location.
+- TN (True Negative): when the model correctly predicts no ball visible within a frame.
+- FP1 (False Positive Type 1): when the model correctly predicts the presence of a ball within a frame, but outside the tolerance value of 4 pixels from the true ball location.
+- FP2 (False Positive Type 2): when the model incorrectly predicts the presence of a ball within a frame while there is no ball visible. 
+- FN (False Negative): when the model incorrectly predicts the absence of a ball within a frame while there is a ball visible. 
 
 ## References
 1.
