@@ -114,7 +114,7 @@ Dataset
 ### Frame Generator
 Outputs individual frames with 1280x720 resolution from an input video.
 
-Note: input video format must .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with 'matchX', where X is an index (first index is 1.) 
+Note: input video format must be .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with 'matchX', where X is an index (first index is 1.) 
 
 Example usage:
 ```bash
@@ -156,39 +156,28 @@ Example usage:
 python "/path/to/DataGen.py" --input_dir="path/to/your/matches/folder" --export_dir="path/to/your/export/folder" --val_split=0.2 --augment_data=1 --next_img_index=2
 ```
 Accepted arguments:
-```bash
+|argument|Event|  
+|-----|----|
+|--input_dir (required)|Input directory of the folder containing all folders with names with the prefix 'match'.
+|--export_dir (required)| Export directory where the data will be saved.
+|--augment_data {0,1} (optional) | Boolean indicating whether or not the data should be augmented as well (flipped horizontally). 1 for augmentations, 0 for no augmentations. No augmented versions will be used as validation instances. Default = 1
+|--val_split (optional)|Fraction of instances to be used for validation: must be greater than 0.0 and less than 1.0. Note this only affects the validation:non-augmented-data ratio, not the total validation:train-instances ratio. Default = 0.2
+|--next_img_index (optional)|Specifies the overlap of images between instances; specifically the integer to be used for selecting the index of the first image of the next instance relative to the index of the first image of the previous instance. For example, if set to 2, the first instance will contain images with indices [0,1,2,3,4] and the second instance will contain images with indices [2,3,4,5,6]. Default = 2
 
-  -h, --help            show this help message and exit
-  --input_dir (required)
-        Input directory of the folder containing all folders
-        with names with the prefix 'match'.
-  --export_dir (required)
-        Export directory where the data will be saved.
-  --augment_data {0,1} (optional) 
-        Boolean indicating whether or not the data should be
-        augmented as well (flipped horizontally). 1 for
-        augmentations, 0 for no augmentations. No augmented
-        versions will be used as validation instances. Default
-        = 1
-  --val_split (optional)
-        Fraction of instances to be used for validation: must
-        be greater than 0.0 and less than 1.0. Note this only
-        affects the validation:non-augmented-data ratio, not
-        the total validation:train-instances ratio. Default =
-        0.2
-  --next_img_index (optional)
-        Specifies the overlap of images between instances;
-        specifically the integer to be used for selecting the
-        index of the first image of the next instance relative
-        to the index of the first image of the previous
-        instance. For example, if set to 2, the first instance
-        will contain images with indices [0,1,2,3,4] and the
-        second instance will contain images with indices
-        [2,3,4,5,6]. Default = 2
-```
 
 
 ### Training
+```bash
+python "/path/to/Train.py" --data_dir="path/to/tfrecord/files" --save_weights="path/to/your/export/folder" --epochs=50 --tol=4
+```
+Accepted arguments:
+|argument|Event|  
+|-----|----|
+|--data_dir (required)|Data directory of the folder containing all folders with names with the prefix 'match'.
+|--load_weights (optional)|Directory to load pre-trained weights.
+|--save_weights (required)|Directory to store model weights and training metrics.
+|--epochs (required)|Number of epochs (iterations of the training data) the model should be trained for.|
+|--tol (optional)|Specifies the tolerance of the model: the number of pixels the predicted location is allowed to deviate from the true location. Default = 4
 
 
 ## Architecture
