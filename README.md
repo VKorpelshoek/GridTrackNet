@@ -41,9 +41,10 @@ Originally based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/Track
       - Linux/Windows: https://www.tensorflow.org/install/pip
       - Mac: https://developer.apple.com/metal/tensorflow-plugin/
 
-2. In your virtual environment (Conda, Miniforge, etc.), run 
+2. Create a virtual environment (Conda, Miniforge, etc.) using ```python=3.10.8``` 
+3. In your virtual environment, run:
 ```commandline
-pip install -r requirements.txt
+pip install -r "path/to/requirements.txt"
 ```
 
 ## Inference
@@ -70,11 +71,15 @@ Predict.getPredictions(frames, isBGRFormat = False)
 
 Receives as input a list of frames (number of frames should be a multiple of 5), and outputs a list of pixel coordinates for each input frame. If no ball was detected, the model returns coordinate (0,0). In case the frames are in BGR format (such as when using OpenCV), specify this with the isBGRFormat argument.
 ## Custom Training Guide
-1. For each video, use *FrameGenerator.py* to extract individual frames from a video.
+### Overview
+0. Trim your custom video's to contain only a single rally with your own video trimming software.
+1. For each trimmed video, use *FrameGenerator.py* to extract the individual frames of the video.
 2. For each match folder, use *LabellingTool.py* to label all frames.
 3. After annotating all data, use *DataGen.py* to generate the dataset in TFRecord format.
-4. Train the model using *Train.py*
-5. Inference on your custom model using *Predict.py* by specifying the path to the saved .h5 file with the argument *--model_dir*
+4. Train the model using *Train.py*.
+5. Deploy your custom model! You can use *Predict.py* by specifying the path to the saved .h5 file with the argument *--model_dir*
+
+*More detailed explanations for each utility can be found below.*
 
 Resulting Sample Dataset Folder Structure:
 ```
@@ -119,7 +124,7 @@ Dataset
 ### Frame Generator
 Outputs individual frames with 1280x720 resolution from an input video.
 
-Note: input video format must be .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with 'matchX', where X is an index (first index is 1.) 
+Note: input video format must be .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with 'matchX', where X is an index (first index is 1.)  See the example folder structure above.
 
 Example usage:
 ```commandline
@@ -129,7 +134,7 @@ python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir
 ### Labelling Tool
 Outputs a *Labels.csv* file containing the pixel coordinates of the ball and visibility per frame.
 
-Note: you can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. It is advised to use a mouse with a scroll wheel for zooming capabilities. Note that, for faster annotation speeds, the next frame is automatically loaded after annotating the previous frame.
+Note: you can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. Specify VISIBLE for when a ball is (partially) visible in a frame, and INVISIBLE when it is occluded or out of frame. It is advised to use a mouse with a scroll wheel for zooming capabilities. Note that, for faster annotation speeds, the next frame is automatically loaded after annotating the previous frame.
 
 Example usage:
 ```commandline

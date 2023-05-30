@@ -21,11 +21,11 @@ VIDEO_DIR = args.video_dir
 EXPORT_DIR = args.export_dir
 
 def validDir(directory):
-    suffix = directory.split('/')[-1]
+    _, suffix = os.path.split(directory)
     if not suffix.startswith('match'):  
         return False  
     number_part = suffix[5:] 
-    return number_part.isdigit() 
+    return number_part.isdigit()
 
 if(not (validDir(EXPORT_DIR ))):
     print("\nERROR: Specified export folder does not start with 'match' followed by an index.")
