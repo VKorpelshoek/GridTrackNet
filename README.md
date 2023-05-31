@@ -79,7 +79,7 @@ Receives as input a list of frames (number of frames should be a multiple of 5),
 4. Train the model using *Train.py*.
 5. Deploy your custom model! You can use *Predict.py* by specifying the path to the saved .h5 file with the argument *--model_dir*
 
-*More detailed explanations for each utility can be found below.*
+*More detailed explanations for each utility can be found below. For each utility, the ```-h``` flag can be used to check supported arguments.*
 
 Resulting Sample Dataset Folder Structure:
 ```
@@ -121,7 +121,7 @@ Dataset
 |       |___val.tfrecord
 ```  
 
-### Frame Generator
+### 1. Frame Generator
 Outputs individual frames with 1280x720 resolution from an input video.
 
 Note: input video format must be .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with 'matchX', where X is an index (first index is 1.)  See the example folder structure above.
@@ -131,33 +131,37 @@ Example usage:
 python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir="path/to/Dataset/matchX"
 ```   
 
-### Labelling Tool
+### 2. Labelling Tool
 Outputs a *Labels.csv* file containing the pixel coordinates of the ball and visibility per frame.
 
-Note: you can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. Specify VISIBLE for when a ball is (partially) visible in a frame, and INVISIBLE when it is occluded or out of frame. It is advised to use a mouse with a scroll wheel for zooming capabilities. Note that, for faster annotation speeds, the next frame is automatically loaded after annotating the previous frame.
+You can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. If the *Save Results* button is pressed without every frame annotated, the frames for which there are missing labels are printed to the console. The program automatically terminates if the .csv file is successfully saved. **Important: if the program is terminated BEFORE saving, no labels are saved!**
+
+Label the frame by clicking on the center of a ball. In case of elongated, blurred, or almost invisible balls, try to still annotate the center. Specify *VISIBLE* for when a ball is (partially) visible in a frame, and *INVISIBLE* when it is occluded or out of frame. 
+
+It is advised to use a mouse with a scroll wheel for zooming capabilities. When using the scroll wheel, the frame will be zoomed in at the place below the mouse pointer. Note that, for faster annotation speeds, the next frame is automatically loaded after annotating the previous frame with the same zoom level as previous annotation.
 
 Example usage:
 ```commandline
-python "/path/to/LabellingTool.py" --frames_dir="path/to/Dataset/matchX"
+python "/path/to/LabellingTool.py" --match_dir="path/to/Dataset/matchX"
 ```   
 
 Controls:
 |Type|Event|Function|   
 |-----|----|--------|   
 |Mouse|Left mouse click|Mark ball location|
-|Mouse|Scroll wheel|Zoom in/zoom out|
+|Mouse|Scroll wheel|Zoom in/zoom out at place of mouse pointer|
 |Key|a|Previous frame|
 |Key|d|Next frame|
 |Button|Toggle State|Specify the presence of a ball in a frame|
 |Button|Remove Pixel|Removes current ball annotation from the frame|
-|Button|Remove Frame|Removes current frame from the 'frames folder'|
-|Button|Save Results|Saves all annotations to \matchX\frames\Labels.csv|
+|Button|Remove Frame|Permanently deletes the current frame from the frames directory|
+|Button|Save Results|Saves all annotations to *\matchX\Labels.csv*|
 
 
 
 
-### Dataset Generation
-Original Dataset Link: ....
+### 3. Dataset Generation
+Original Dataset Link: https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
 
 Example usage:
 ```commandline
@@ -168,13 +172,13 @@ Accepted arguments:
 |-----|----|
 |input_dir (required)|Input directory of the folder containing all folders with names with the prefix 'match'.
 |export_dir (required)| Export directory where the data will be saved.
-|augment_data {0,1} (optional) | Boolean indicating whether or not the data should be augmented as well (flipped horizontally). 1 for augmentations, 0 for no augmentations. No augmented versions will be used as validation instances. Default = 1
+|augment_data {0,1} (optional) | Boolean indicating whether or not the data should be augmented as well (flipped horizontally). 1 for augmentations, 0 for no augmentations. No augmented instances will be used as validation instances. Default = 1
 |val_split (optional)|Fraction of instances to be used for validation: must be greater than 0.0 and less than 1.0. Note this only affects the validation:non-augmented-data ratio, not the total validation:train-instances ratio. Default = 0.2
-|next_img_index (optional)|Specifies the overlap of images between instances; specifically the integer to be used for selecting the index of the first image of the next instance relative to the index of the first image of the previous instance. For example, if set to 2, the first instance will contain images with indices [0,1,2,3,4] and the second instance will contain images with indices [2,3,4,5,6]. Default = 2
+|next_img_index (optional)|Specifies the overlap of images between instances; specifically the integer to be used for selecting the index of the first image of the next instance relative to the index of the first image of the previous instance. For example, if set to 2, the first instance will contain images with indices [0,1,2,3,4] and the second instance will contain images with indices [2,3,4,5,6]. For no overlap, set to 5. Default = 2
 
 
 
-### Training
+### 4. Training
 ```commandline
 python "/path/to/Train.py" --data_dir="path/to/tfrecord/files" --save_weights="path/to/your/export/folder" --epochs=50 --tol=4
 ```
@@ -186,7 +190,7 @@ Accepted arguments:
 |save_weights (required)|Directory to store model weights and training metrics.
 |epochs (required)|Number of epochs (iterations of the training data) the model should be trained for.|
 |tol (optional)|Specifies the tolerance of the model: the number of pixels the predicted location is allowed to deviate from the true location. Default = 4
-
+|batch_size (optional) | Specify the batch size to train on. Default = 5|
 
 ## Architecture
 Adapted version of the VGG16 model. 

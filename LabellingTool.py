@@ -25,6 +25,17 @@ if(not os.path.exists(MATCH_DIR)):
     print("\nERROR: The following directory does not exist: " + str(MATCH_DIR))
     exit(1)
 
+def validDir(directory):
+    _, suffix = os.path.split(directory)
+    if not suffix.startswith('match'):  
+        return False  
+    number_part = suffix[5:] 
+    return number_part.isdigit()
+
+if(not (validDir(MATCH_DIR))):
+    print("\nERROR: Specified export folder does not start with 'match' followed by an index.")
+    exit(1)
+
 if(not os.path.exists(FRAMES_DIR)):
     print("\nERROR: The following directory does not exist: " + str(FRAMES_DIR))
     exit(1)
@@ -82,7 +93,7 @@ class ImageViewer(QMainWindow):
         self.visbilityText.setFont(QFont("Arial", 30))
 
         self.imageText = QLabel()
-        self.imageText.setStyleSheet("color: white;")
+        self.imageText.setStyleSheet("color: black;")
         self.imageText.setFont(QFont("Arial", 30))
 
         self.annotatedText = QLabel()   
@@ -294,5 +305,6 @@ class ImageViewer(QMainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     viewer = ImageViewer()
-    viewer.showFullScreen()
+    viewer.show()
+    #viewer.showFullScreen()
     sys.exit(app.exec_())

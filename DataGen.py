@@ -26,7 +26,7 @@ parser = argparse.ArgumentParser(description='Argument Parser for GridTrackNet')
 
 parser.add_argument('--input_dir', required=True, type=str, help="Input directory of the folder containing all folders with names with the prefix 'match'.")
 parser.add_argument('--export_dir', required=True, type=str, help="Export directory where the data will be saved.")
-parser.add_argument('--augment_data', required=False, type=int,  choices=range(0, 2), default=1, help='Boolean indicating whether or not the data should be augmented as well (flipped horizontally). 1 for augmentations, 0 for no augmentations. No augmented versions will be used as validation instances. Default = 1')
+parser.add_argument('--augment_data', required=False, type=int,  choices=range(0, 2), default=1, help='Boolean indicating whether or not the data should be augmented as well (flipped horizontally). 1 for augmentations, 0 for no augmentations. No augmented instances will be used as validation instances. Default = 1')
 parser.add_argument('--val_split', required=False, type=float, default=0.2, help='Fraction of instances to be used for validation: must be greater than 0.0 and less than 1.0. Note this only affects the validation:non-augmented-data ratio, not the total validation:train-instances ratio. Default = 0.2')
 parser.add_argument('--next_img_index', required=False, type=int, default=2, choices=range(1,IMGS_PER_INSTANCE+1), help='Specifies the overlap of images between instances; specifically the integer to be used for selecting the index of the first image of the next instance relative to the index of the first image of the previous instance. For example, if set to 2, the first instance will contain images with indices [0,1,2,3,4] and the second instance will contain images with indices [2,3,4,5,6].Default = 2')
 
@@ -81,7 +81,8 @@ def getDataAndLabels(imgs,xCoords,yCoords,visibilities):
         xOffset = xPos - xCellIndex
         yOffset = yPos - yCellIndex
 
-        if(not ((visibilities[k] == 0) and xCoords[k] == 0 and yCoords[k] == 0)):
+        if(visibilities[k] == 1):
+        #if(not ((visibilities[k] == 0) and xCoords[k] == 0 and yCoords[k] == 0)):
             confGrid[yCellIndex, xCellIndex] = 1
             xOffsetGrid[yCellIndex, xCellIndex] = xOffset
             yOffsetGrid[yCellIndex, xCellIndex] = yOffset
@@ -148,7 +149,7 @@ for m in range(1, numMatchFolders+1):
         exit(1)
     framesPath = os.path.join(matchPath, "frames")
     if(not os.path.exists(os.path.join(matchPath, 'Labels.csv'))):    
-        print("\nERROR: No 'Labels.cvs' file found at path: " + str(os.path.join(matchPath, 'Labels.csv')))
+        print("\nERROR: No 'Labels.csv' file found at path: " + str(os.path.join(matchPath, 'Labels.csv')))
         exit(1)
     with open(os.path.join(matchPath, 'Labels.csv')) as csvfile:
         reader = csv.DictReader(csvfile)

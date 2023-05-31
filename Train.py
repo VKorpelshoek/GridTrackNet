@@ -18,7 +18,6 @@ from tensorflow.python.ops.numpy_ops import np_config
 np_config.enable_numpy_behavior()
 
 IMGS_PER_INSTANCE = 5
-BATCH_SIZE = 3
 HEIGHT = 432
 WIDTH = 768
 GRID_COLS = 48
@@ -31,6 +30,7 @@ parser.add_argument('--load_weights', required=False, type=str, help="Directory 
 parser.add_argument('--save_weights', required=True, type=str, help="Directory to store model weights and training metrics.")
 parser.add_argument('--epochs', required=True, type=int, help='Number of epochs (iterations of the training data) the model should be trained for.')
 parser.add_argument('--tol', required=False, type=int, default=4, help='Specifies the tolerance of the model: the number of pixels the predicted location is allowed to deviate from the true location. Default = 4')
+parser.add_argument('--batch_size', required=False, type=int, default=5,help="Specify the batch size to train on. Default = 5")
 
 args = parser.parse_args()
 
@@ -39,6 +39,7 @@ LOAD_WEIGHTS = args.load_weights
 SAVE_WEIGHTS = args.save_weights
 EPOCHS = args.epochs
 TOL = args.tol
+BATCH_SIZE = args.batch_size
 
 def calcOutcomeStats(y_pred, y_true):
 	TP = TN = FP1 = FP2 = FN = 0
@@ -198,7 +199,7 @@ def custom_loss(y_true, y_pred):
 
 	loss = offset + confidence
 
-	return tf.reduce_mean(loss)
+	return tf.reduce_sum(loss)
 
 #Helper function to convert raw TFRecord file data entries into instances with labels
 def parseInstance(rawData):
@@ -260,7 +261,7 @@ tfRecordFilePattern = os.path.join(DATA_DIR,"train*.tfrecord")
 numTrainFiles = len(glob(tfRecordFilePattern)) - 1
 numInstancesPerFile = 50
 bufferSize = numInstancesPerFile  #Set to number of instances per batch for maximum randomness, 50 by default in DataGen.py
-numParallelCalls = 10  # Adjust the number of parallel calls based on system's available resources
+numParallelCalls = 8  # Adjust the number of parallel calls based on system's available resources
 stepsPerEpoch = (numTrainFiles * numInstancesPerFile) // BATCH_SIZE
 
 #Creates a new .csv file for outputting training and evaluation results
