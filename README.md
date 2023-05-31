@@ -11,7 +11,7 @@ Official paper: **LINK TO PAPER**
 Originally based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
 ### Main improvements
-1. 🚀 Ultra-efficient custom architecture for X FPS (+X% to TrackNetv2)
+1. 🚀 Redesigned ultra-efficient custom architecture for X FPS (+X% to TrackNetv2)
 2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection on small tennis balls
 3. 📺 5 input frames and 5 output frames for enhanced temporal information
 
@@ -30,10 +30,10 @@ Originally based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/Track
 |Input resolution|512 x 288| **768 x 432**|
 |Output resolution|512 x 288| **48 x 27**|
 |Inference speed|FPS ON 3080|**FPS ON 3080**|
-|Accuracy|**OLD VAL**|**NEW VAL**|
-|Precision|**OLD VAL**|**NEW VAL**|
-|Recall|**OLD VAL**|**NEW VAL**|
-|F1|**OLD VAL**|**NEW VAL**|
+|Accuracy|OLD VAL|**NEW VAL**|
+|Precision|OLD VAL|**NEW VAL**|
+|Recall|OLD VAL|**NEW VAL**|
+|F1|OLD VAL|**NEW VAL**|
 
 *Note: metrics were computed only once on a separate test dataset. *
 
