@@ -177,7 +177,7 @@ def custom_loss(y_true, y_pred):
 	y_pred = tf.stack(y_pred, axis=2)
 	y_pred = tf.transpose(y_pred, perm=[0, 2, 3, 4, 1])
 
-	#Separate confGrid from offset grids
+	#Separate confidence grids from offset grids
 	confGridTrue, xOffsetGridTrue, yOffsetGridTrue = tf.split(y_true, 3, axis=-1)
 	confGridPred, xOffsetGridPred, yOffsetGridPred = tf.split(y_pred, 3, axis=-1)
 

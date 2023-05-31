@@ -1,4 +1,5 @@
-# GridTrackNetfast*fast
+# GridTrackNet
+
 <p align="center">
   <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet.png" alt="image" style="display:block; margin:auto;" />
 </p>
@@ -49,7 +50,7 @@ pip install -r "path/to/requirements.txt"
 
 ## Inference
 ### Video Output
-Receives as input a video and outputs the same video with visual predicted ball locations.
+`Predict.py` receives as input a video and outputs the same video with visual predicted ball locations.
 
 Example usage:
 ```commandline
@@ -65,7 +66,7 @@ python /path/to/Predict.py --video_dir="/path/to/video.mp4" --model_dir="/path/t
 |display_trail (optional) | Displays a trail of the ball trajectory. If set to 0, only a red circle around the predicted ball location is displayd on each frame.|
 
 ### API
-`Predict.py` script can be imported into your own code base. Predictions can be called by the following function:
+`Predict.py` script can be imported into your own code base. Predictions can be done by the following function call:
 ```commandline 
 Predict.getPredictions(frames, isBGRFormat = False)
 ```
@@ -79,7 +80,7 @@ Receives as input a list of frames (number of frames should be a multiple of 5),
 2. For each match folder, use `LabellingTool.py` to label all frames.
 3. After annotating all data, use `DataGen.py` to generate the dataset in TFRecord format.
 4. Train the model using `Train.py`.
-5. Deploy your custom model! You can use `Predict.py` by specifying the path to the saved .h5 file with the argument `--model_dir`
+5. Deploy your custom model! You can use `Predict.py` by specifying the path to the saved `.h5` file with the argument `--model_dir`
 
 *More detailed explanations for each utility can be found below. For each utility, the `-h` flag can be used to check supported arguments.*
 
@@ -165,7 +166,7 @@ Controls:
 ### 3. Dataset Generation
 `DataGen.py` generates TFRecord files containing the instances with corresponding labels to be used for training.
 
-Original Dataset Link: https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
+Original dataset Link: https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
 
 Example usage:
 ```commandline
