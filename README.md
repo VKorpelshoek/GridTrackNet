@@ -1,4 +1,4 @@
-# GridTrackNet
+# GridTrackNetfast*fast
 <p align="center">
   <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet.png" alt="image" style="display:block; margin:auto;" />
 </p>
@@ -41,7 +41,7 @@ Originally based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/Track
       - Linux/Windows: https://www.tensorflow.org/install/pip
       - Mac: https://developer.apple.com/metal/tensorflow-plugin/
 
-2. Create a virtual environment (Conda, Miniforge, etc.) using ```python=3.10.8``` 
+2. Create a virtual environment (Conda, Miniforge, etc.) using `python=3.10.8`
 3. In your virtual environment, run:
 ```commandline
 pip install -r "path/to/requirements.txt"
@@ -61,11 +61,11 @@ python /path/to/Predict.py --video_dir="/path/to/video.mp4" --model_dir="/path/t
 |Argument|Event|  
 |-----|----|
 |video_dir (required) | Path to .mp4 video|
-|model_dir (optional) | Path to *model_weights.h5* file for loading a custom model|
+|model_dir (optional) | Path to `model_weights.h5` file for loading a custom model|
 |display_trail (optional) | Displays a trail of the ball trajectory. If set to 0, only a red circle around the predicted ball location is displayd on each frame.|
 
 ### API
-*Predict.py* script can be imported into your own code base. Predictions can be called by the following function:
+`Predict.py` script can be imported into your own code base. Predictions can be called by the following function:
 ```commandline 
 Predict.getPredictions(frames, isBGRFormat = False)
 ```
@@ -75,13 +75,13 @@ Receives as input a list of frames (number of frames should be a multiple of 5),
 ## Custom Data Training Guide
 ### Overview
 0. Trim your custom video's to contain only a single rally with your own video trimming software.
-1. For each trimmed video, use *FrameGenerator.py* to extract the individual frames of the video.
-2. For each match folder, use *LabellingTool.py* to label all frames.
-3. After annotating all data, use *DataGen.py* to generate the dataset in TFRecord format.
-4. Train the model using *Train.py*.
-5. Deploy your custom model! You can use *Predict.py* by specifying the path to the saved .h5 file with the argument *--model_dir*
+1. For each trimmed video, use `FrameGenerator.py` to extract the individual frames of the video.
+2. For each match folder, use `LabellingTool.py` to label all frames.
+3. After annotating all data, use `DataGen.py` to generate the dataset in TFRecord format.
+4. Train the model using `Train.py`.
+5. Deploy your custom model! You can use `Predict.py` by specifying the path to the saved .h5 file with the argument `--model_dir`
 
-*More detailed explanations for each utility can be found below. For each utility, the ```-h``` flag can be used to check supported arguments.*
+*More detailed explanations for each utility can be found below. For each utility, the `-h` flag can be used to check supported arguments.*
 
 Resulting Sample Dataset Folder Structure:
 ```
@@ -124,9 +124,9 @@ Dataset
 ```  
 
 ### 1. Frame Generator
-*FrameGenerator.py* outputs individual frames with 1280x720 resolution from an input video.
+`FrameGenerator.py` outputs individual frames with 1280x720 resolution from an input video.
 
-Note: input video format must be .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with 'matchX', where X is an index (first index is 1.)  See the example folder structure above.
+Note: input video format must be .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with `matchX`, where `X` is an index (first index is 1.)  See the example folder structure above.
 
 Example usage:
 ```commandline
@@ -134,11 +134,11 @@ python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir
 ```   
 
 ### 2. Labelling Tool
-*LabellingTool.py* outputs a *Labels.csv* file containing the pixel coordinates of the ball and visibility per frame.
+`LabellingTool.py` outputs a `Labels.csv` file containing the pixel coordinates of the ball and visibility per frame.
 
-You can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. If the *Save Results* button is pressed without every frame annotated, the frames for which there are missing labels are printed to the console. The program automatically terminates if the .csv file is successfully saved. **Important: if the program is terminated BEFORE saving, no labels are saved!**
+You can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. If the `Save Results` button is pressed without every frame annotated, the frames for which there are missing labels are printed to the console. The program automatically terminates if the .csv file is successfully saved. **Important: if the program is terminated BEFORE saving, no labels are saved!**
 
-Label the frame by clicking on the center of a ball. In case of elongated, blurred, or almost invisible balls, try to still annotate the center. Specify *VISIBLE* for when a ball is (partially) visible in a frame, and *INVISIBLE* when it is occluded or out of frame. 
+Label the frame by clicking on the center of a ball. In case of elongated, blurred, or almost invisible balls, try to still annotate the center. Specify `VISIBLE` for when a ball is (partially) visible in a frame, and `INVISIBLE` when it is occluded or out of frame. 
 
 It is advised to use a mouse with a scroll wheel for zooming capabilities. When using the scroll wheel, the frame will be zoomed in at the place below the mouse pointer. Note that, for faster annotation speeds, the next frame is automatically loaded after annotating the previous frame with the same zoom level as previous annotation.
 
@@ -163,7 +163,7 @@ Controls:
 
 
 ### 3. Dataset Generation
-*DataGen.py* generates TFRecord files containing the instances with corresponding labels to be used for training.
+`DataGen.py` generates TFRecord files containing the instances with corresponding labels to be used for training.
 
 Original Dataset Link: https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
 
@@ -174,7 +174,7 @@ python "/path/to/DataGen.py" --input_dir="path/to/your/matches/folder" --export_
 Accepted arguments:
 |Argument|Event|  
 |-----|----|
-|input_dir (required)|Input directory of the folder containing all folders with names with the prefix 'match'.
+|input_dir (required)|Input directory of the folder containing all folders with names with the prefix `match`.
 |export_dir (required)| Export directory where the data will be saved.
 |augment_data {0,1} (optional) | Boolean indicating whether or not the data should be augmented as well (flipped horizontally). 1 for augmentations, 0 for no augmentations. No augmented instances will be used as validation instances. Default = 1
 |val_split (optional)|Fraction of instances to be used for validation: must be greater than 0.0 and less than 1.0. Note this only affects the validation:non-augmented-data ratio, not the total validation:train-instances ratio. Default = 0.2
@@ -183,7 +183,7 @@ Accepted arguments:
 
 
 ### 4. Training
-*Train.py* can be used to train the GridTrackNet model with custom data.
+`Train.py` can be used to train the GridTrackNet model with custom data.
 
 ```commandline
 python "/path/to/Train.py" --data_dir="path/to/tfrecord/files" --save_weights="path/to/your/export/folder" --epochs=50 --tol=4
@@ -191,7 +191,7 @@ python "/path/to/Train.py" --data_dir="path/to/tfrecord/files" --save_weights="p
 Accepted arguments:
 |Argument|Event|  
 |-----|----|
-|data_dir (required)|Data directory of the folder containing all folders with names with the prefix 'match'.
+|data_dir (required)|Data directory of the folder containing all folders with names with the prefix `match`.
 |load_weights (optional)|Directory to load pre-trained weights.
 |save_weights (required)|Directory to store model weights and training metrics.
 |epochs (required)|Number of epochs (iterations of the training data) the model should be trained for.|
