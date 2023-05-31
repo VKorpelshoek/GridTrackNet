@@ -49,7 +49,7 @@ pip install -r "path/to/requirements.txt"
 
 ## Inference
 ### Video Output
-Receives as input a video and outputs the same video predicted ball locations.
+Receives as input a video and outputs the same video with visual predicted ball locations.
 
 Example usage:
 ```commandline
@@ -65,12 +65,14 @@ python /path/to/Predict.py --video_dir="/path/to/video.mp4" --model_dir="/path/t
 |display_trail (optional) | Displays a trail of the ball trajectory. If set to 0, only a red circle around the predicted ball location is displayd on each frame.|
 
 ### API
+*Predict.py* script can be imported into your own code base. Predictions can be called by the following function:
 ```commandline 
 Predict.getPredictions(frames, isBGRFormat = False)
 ```
 
 Receives as input a list of frames (number of frames should be a multiple of 5), and outputs a list of pixel coordinates for each input frame. If no ball was detected, the model returns coordinate (0,0). In case the frames are in BGR format (such as when using OpenCV), specify this with the isBGRFormat argument.
-## Custom Training Guide
+
+## Custom Data Training Guide
 ### Overview
 0. Trim your custom video's to contain only a single rally with your own video trimming software.
 1. For each trimmed video, use *FrameGenerator.py* to extract the individual frames of the video.
@@ -122,7 +124,7 @@ Dataset
 ```  
 
 ### 1. Frame Generator
-Outputs individual frames with 1280x720 resolution from an input video.
+*FrameGenerator.py* outputs individual frames with 1280x720 resolution from an input video.
 
 Note: input video format must be .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with 'matchX', where X is an index (first index is 1.)  See the example folder structure above.
 
@@ -132,7 +134,7 @@ python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir
 ```   
 
 ### 2. Labelling Tool
-Outputs a *Labels.csv* file containing the pixel coordinates of the ball and visibility per frame.
+*LabellingTool.py* outputs a *Labels.csv* file containing the pixel coordinates of the ball and visibility per frame.
 
 You can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. If the *Save Results* button is pressed without every frame annotated, the frames for which there are missing labels are printed to the console. The program automatically terminates if the .csv file is successfully saved. **Important: if the program is terminated BEFORE saving, no labels are saved!**
 
@@ -161,6 +163,8 @@ Controls:
 
 
 ### 3. Dataset Generation
+*DataGen.py* generates TFRecord files containing the instances with corresponding labels to be used for training.
+
 Original Dataset Link: https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
 
 Example usage:
@@ -179,6 +183,8 @@ Accepted arguments:
 
 
 ### 4. Training
+*Train.py* can be used to train the GridTrackNet model with custom data.
+
 ```commandline
 python "/path/to/Train.py" --data_dir="path/to/tfrecord/files" --save_weights="path/to/your/export/folder" --epochs=50 --tol=4
 ```
