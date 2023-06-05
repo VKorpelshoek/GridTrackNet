@@ -8,7 +8,7 @@ A Tensorflow implementation of GridTrackNet for real time tennis ball tracking; 
 
 Official paper: **LINK TO PAPER**
 
-Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
+Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2 <sup>1</sup>
 
 ### Main improvements
 1. 🚀 Redesigned ultra-efficient architecture reaching 117 FPS (📈+290% to TrackNetV2)*
@@ -70,7 +70,7 @@ python "/path/to/Predict.py" --video_dir="/path/to/video.mp4" --model_dir="/path
 Predict.getPredictions(frames, isBGRFormat = False)
 ```
 
-Receives as input a list of frames (number of frames should be a multiple of 5), and outputs a list of pixel coordinates for each input frame. If no ball was detected, the model returns coordinate (0,0). In case the frames are in BGR format (such as when using OpenCV), specify this with the `isBGRFormat` argument.
+Receives as input a list of concurrent frames (number of frames should be a multiple of 5), and outputs a list of pixel coordinates for each input frame. If no ball was detected, the model returns coordinate (0,0). In case the frames are in BGR format (such as when using OpenCV), specify this with the `isBGRFormat` argument.
 
 ## Custom Data Training Guide
 ### Overview
@@ -201,7 +201,7 @@ Accepted arguments:
 |batch_size (optional) | Specify the batch size to train on. Default = 3|
 
 ## Architecture
-Adapted version of the VGG16 model. 
+Adapted version of the VGG16 model.<sup>2</sup> 
 |Layer Number|Layer Type|Filters|Kernel Size|Activation|Output Resolution|   
 |-|-----|-------|-----------|----------|---|
 |1|Conv2D|64|3x3|ReLU + Batch Norm.|768 x 432|
@@ -232,7 +232,7 @@ Adapted version of the VGG16 model.
 ### Formula Variable Definitions
 - TP (True Positive): when the model correctly predicts the location of a ball within a frame being less than 4 pixels from the true ball location.
 - TN (True Negative): when the model correctly predicts no ball visible within a frame.
-- FP1 (False Positive Type 1): when the model correctly predicts the presence of a ball within a frame, but outside the tolerance value of 4 pixels from the true ball location.
+- FP1 (False Positive Type 1): when the model predicts the presence of a ball within a frame, but its predicted location is more than 4 pixels away from the true ball location.
 - FP2 (False Positive Type 2): when the model incorrectly predicts the presence of a ball within a frame while there is no ball visible. 
 - FN (False Negative): when the model incorrectly predicts the absence of a ball within a frame while there is a ball visible. 
 
