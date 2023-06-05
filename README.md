@@ -167,7 +167,7 @@ Controls:
 
 Original dataset Link: https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
 
-*Training data consisted primarily of diverse amature footage, as well as professional TV broadcasts.*
+*Training data consisted primarily of diverse amature footage as well as professional TV broadcasts, but can be trained on custom data for your own use case.*
 
 Example usage:
 ```commandline
@@ -237,11 +237,11 @@ Adapted version of the VGG16 model.
 - FN (False Negative): when the model incorrectly predicts the absence of a ball within a frame while there is a ball visible. 
 
 ## References
-1.
-2.
-3.
+1. N. -E. Sun et al., "TrackNetV2: Efficient Shuttlecock Tracking Network," 2020 International Conference on Pervasive Artificial Intelligence (ICPAI), Taipei, Taiwan, 2020, pp. 86-91, doi: 10.1109/ICPAI51961.2020.00023.
+2. Simonyan, K. & Zisserman, A. (2014). Very Deep Convolutional Networks for Large-Scale Image Recognition. CoRR, abs/1409.1556. 
+3. Amature tennis data courtesy to AmateurTennistv http://amateurtennis.tv. YouTube: https://www.youtube.com/@AmateurTennistv
 
-*Disclaimer: some parts of the source code have been developed in assistance with ChatGPT and, even though unlikely, might contain unexpected behavior at times.*
+*Disclaimer: some parts of the source code have been developed in assistance with ChatGPT-4 and, even though unlikely, might contain unexpected behavior at times.*
 
 
 
