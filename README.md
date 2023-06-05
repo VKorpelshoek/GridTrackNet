@@ -74,7 +74,7 @@ Receives as input a list of concurrent frames (number of frames should be a mult
 
 ## Custom Data Training Guide
 ### Overview
-0. Trim your custom video's to contain only a single rally with your own video trimming software.
+0. Trim your custom videos to contain only a single rally with your own video trimming software.
 1. For each trimmed video, use `FrameGenerator.py` to extract the individual frames of the video.
 2. For each match folder, use `LabellingTool.py` to label all frames.
 3. After annotating all data, use `DataGen.py` to generate the dataset in TFRecord format.
@@ -140,7 +140,7 @@ Label the frame by clicking on the center of a ball. In case of elongated, blurr
 
 It is advised to use a mouse with a scroll wheel for zooming capabilities. When using the scroll wheel, the frame will be zoomed in at the place below the mouse pointer. Note that, for faster annotation speeds, the next frame is automatically loaded after annotating the previous frame with the same zoom level as previous annotation.
 
-You can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. If the `Save Results` button is pressed without every frame annotated, the frames' indices for which there are missing labels are printed to the console. The program automatically terminates if the `Labels.csv` file is successfully saved. **Important: if the program is terminated BEFORE saving, no labels are saved!**
+You can save the annotations only after all frames have been annotated, either with a ball coordinate or with the 'invisible' state. If the `Save Results` button is pressed without annotating every frame, the indices of the frames with missing labels are printed to the console. The program automatically terminates if the `Labels.csv` file is successfully saved. **Important: if the program is terminated BEFORE saving, no labels are saved!**
 
 Example usage:
 ```commandline
@@ -165,7 +165,7 @@ Controls:
 ### 3. Dataset Generation
 `DataGen.py` generates TFRecord files containing the instances with corresponding labels to be used for training.
 
-Original dataset Link: https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
+Link to the original dataset: https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
 
 *Training data consisted primarily of diverse amature footage as well as professional TV broadcasts, but can be trained on custom data for your own use case.*
 
@@ -230,11 +230,11 @@ Adapted version of the VGG16 model.<sup>2</sup>
 
 
 ### Formula Variable Definitions
-- TP (True Positive): when the model correctly predicts the location of a ball within a frame being less than 4 pixels from the true ball location.
-- TN (True Negative): when the model correctly predicts no ball visible within a frame.
-- FP1 (False Positive Type 1): when the model predicts the presence of a ball within a frame, but its predicted location is more than 4 pixels away from the true ball location.
-- FP2 (False Positive Type 2): when the model incorrectly predicts the presence of a ball within a frame while there is no ball visible. 
-- FN (False Negative): when the model incorrectly predicts the absence of a ball within a frame while there is a ball visible. 
+- TP (True Positive): The model correctly predicts the location of a ball within a frame being less than 4 pixels from the true ball location.
+- TN (True Negative): The model correctly predicts no ball visible within a frame.
+- FP1 (False Positive Type 1): The model predicts the presence of a ball within a frame, but its predicted location is more than 4 pixels away from the true ball location.
+- FP2 (False Positive Type 2): The model incorrectly predicts the presence of a ball within a frame while there is no ball visible. 
+- FN (False Negative): The model incorrectly predicts the absence of a ball within a frame while there is a ball visible. 
 
 ## References
 1. N. -E. Sun et al., "TrackNetV2: Efficient Shuttlecock Tracking Network," 2020 International Conference on Pervasive Artificial Intelligence (ICPAI), Taipei, Taiwan, 2020, pp. 86-91, doi: 10.1109/ICPAI51961.2020.00023.
