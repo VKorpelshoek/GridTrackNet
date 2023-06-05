@@ -8,12 +8,14 @@ A Tensorflow implementation of GridTrackNet for real time tennis ball tracking; 
 
 Official paper: **LINK TO PAPER**
 
-Originally based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
+Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
 ### Main improvements
-1. 🚀 Redesigned ultra-efficient custom architecture for X FPS (+X% to TrackNetv2)
-2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection on small tennis balls
+1. 🚀 Redesigned ultra-efficient custom architecture reaching 117 FPS (+290% to TrackNetV2)*
+2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection on tiny objects
 3. 📺 5 input frames and 5 output frames for enhanced temporal information
+
+*Benchmarks performed on M1 Pro MacBook Pro 2021
 
 <p align="center">
   <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
@@ -22,14 +24,14 @@ Originally based on TrackNetv2: https://nol.cs.nctu.edu.tw:234/open-source/Track
 *Training data consisted mainly of diverse amature footage as well as professional TV broadcasts.*
 
 
-### GridTrackNet vs TrackNetv2 Comparison:
+### GridTrackNet vs TrackNetV2 Comparison:
 
-||TrackNetv2|**GridTrackNet**|   
+||TrackNetV2|**GridTrackNet**|   
 |---------|-----|-----|
 |Input/output frames|3/3| **5/5**|
 |Input resolution|512 x 288| **768 x 432**|
 |Output resolution|512 x 288| **48 x 27**|
-|Inference speed|FPS ON 3080|**FPS ON 3080**|
+|Inference speed|30 FPS|**117 FPS**|
 |Accuracy|OLD VAL|**NEW VAL**|
 |Precision|OLD VAL|**NEW VAL**|
 |Recall|OLD VAL|**NEW VAL**|
