@@ -11,11 +11,11 @@ Official paper: **LINK TO PAPER**
 Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2
 
 ### Main improvements
-1. 🚀 Redesigned ultra-efficient custom architecture reaching 117 FPS (+290% to TrackNetV2)*
-2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection on tiny objects
-3. 📺 5 input frames and 5 output frames for enhanced temporal information
+1. 🚀 Redesigned ultra-efficient architecture reaching 117 FPS (📈+290% to TrackNetV2)*
+2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection capabilities for tiny objects
+3. 📺 5 input frames and 5 output frames per instance for increased temporal context
 
-*Benchmarks performed on M1 Pro MacBook Pro 2021
+* *Benchmarks performed on 10-core M1 Pro MacBook Pro 2021*
 
 <p align="center">
   <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
