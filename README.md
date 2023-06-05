@@ -199,7 +199,7 @@ Accepted arguments:
 |save_weights (required)|Directory to store model weights and training metrics.
 |epochs (required)|Number of epochs (iterations of the training data) the model should be trained for.|
 |tol (optional)|Specifies the tolerance of the model: the number of pixels the predicted location is allowed to deviate from the true location. Default = 4
-|batch_size (optional) | Specify the batch size to train on. Default = 5|
+|batch_size (optional) | Specify the batch size to train on. Default = 3|
 
 ## Architecture
 Adapted version of the VGG16 model. 

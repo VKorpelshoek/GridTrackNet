@@ -30,7 +30,7 @@ parser.add_argument('--load_weights', required=False, type=str, help="Directory 
 parser.add_argument('--save_weights', required=True, type=str, help="Directory to store model weights and training metrics.")
 parser.add_argument('--epochs', required=True, type=int, help='Number of epochs (iterations of the training data) the model should be trained for.')
 parser.add_argument('--tol', required=False, type=int, default=4, help='Specifies the tolerance of the model: the number of pixels the predicted location is allowed to deviate from the true location. Default = 4')
-parser.add_argument('--batch_size', required=False, type=int, default=5,help="Specify the batch size to train on. Default = 5")
+parser.add_argument('--batch_size', required=False, type=int, default=3,help="Specify the batch size to train on. Default = 3")
 
 args = parser.parse_args()
 
@@ -172,6 +172,9 @@ def f1(y_true, y_pred):
 #2) Focal loss: 	confidence grid loss, where contribution of 'easy' 
 #					examples to the loss are downweighted by gamma parameter.
 def custom_loss(y_true, y_pred):
+	confWeight = 1
+	offsetWeight = 0.1
+
 	#Reformat the 15 output grids into 5x3 grids.
 	y_pred = tf.split(y_pred, IMGS_PER_INSTANCE, axis=1)
 	y_pred = tf.stack(y_pred, axis=2)
@@ -197,9 +200,9 @@ def custom_loss(y_true, y_pred):
 	negativeConfLoss = (1 - confGridTrue) * tf.pow(confGridPred, gamma) *  tf.math.log(tf.clip_by_value(1 - confGridPred, tf.keras.backend.epsilon(), 1))
 	confidence = tf.reduce_sum((-1)*(positiveConfLoss + negativeConfLoss),axis=[1,2,3,4])
 
-	loss = offset + confidence
+	loss = offsetWeight * offset + confWeight * confidence
 
-	return tf.reduce_sum(loss)
+	return tf.reduce_mean(loss)
 
 #Helper function to convert raw TFRecord file data entries into instances with labels
 def parseInstance(rawData):
