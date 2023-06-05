@@ -58,7 +58,7 @@ python "/path/to/Predict.py" --video_dir="/path/to/video.mp4" --model_dir="/path
 
 
 
-|Argument|Event|  
+|Argument|Description|  
 |-----|----|
 |video_dir (required) | Path to a `.mp4` video|
 |model_dir (optional) | Path to `model_weights.h5` file for loading a custom model|
@@ -174,7 +174,7 @@ Example usage:
 python "/path/to/DataGen.py" --input_dir="path/to/your/matches/folder" --export_dir="path/to/your/export/folder" --val_split=0.2 --augment_data=1 --next_img_index=2
 ```
 Accepted arguments:
-|Argument|Event|  
+|Argument|Description|  
 |-----|----|
 |input_dir (required)|Input directory of the folder containing all folders with names with the prefix `match`.
 |export_dir (required)| Export directory where the data will be saved.
@@ -191,7 +191,7 @@ Accepted arguments:
 python "/path/to/Train.py" --data_dir="path/to/tfrecord/files" --save_weights="path/to/your/export/folder" --epochs=50 --tol=4
 ```
 Accepted arguments:
-|Argument|Event|  
+|Argument|Description|  
 |-----|----|
 |data_dir (required)|Data directory of the folder containing all folders with names with the prefix `match`.
 |load_weights (optional)|Directory to load pre-trained weights.
