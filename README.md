@@ -70,7 +70,7 @@ python "/path/to/Predict.py" --video_dir="/path/to/video.mp4" --model_dir="/path
 Predict.getPredictions(frames, isBGRFormat = False)
 ```
 
-Receives as input a list of frames (number of frames should be a multiple of 5), and outputs a list of pixel coordinates for each input frame. If no ball was detected, the model returns coordinate (0,0). In case the frames are in BGR format (such as when using OpenCV), specify this with the isBGRFormat argument.
+Receives as input a list of frames (number of frames should be a multiple of 5), and outputs a list of pixel coordinates for each input frame. If no ball was detected, the model returns coordinate (0,0). In case the frames are in BGR format (such as when using OpenCV), specify this with the `isBGRFormat` argument.
 
 ## Custom Data Training Guide
 ### Overview
@@ -83,7 +83,7 @@ Receives as input a list of frames (number of frames should be a multiple of 5),
 
 *More detailed explanations for each utility can be found below. For each utility, the `-h` flag can be used to check supported arguments.*
 
-Resulting Sample Dataset Folder Structure:
+Resulting sample dataset folder structure:
 ```
 Dataset
 |   
@@ -126,7 +126,7 @@ Dataset
 ### 1. Frame Generator
 `FrameGenerator.py` outputs individual frames with 1280x720 resolution from an input video.
 
-Note: input video format must be .mp4, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with `matchX`, where `X` is an index (first index is 1.)  See the example folder structure above.
+Note: input video format must be `.mp4`, be either 30FPS or 60FPS, and at least 1280x720 resolution. The export directory should end with `matchX`, where `X` is an index (first index is 1.)  See the example folder structure above.
 
 Example usage:
 ```commandline
@@ -136,11 +136,11 @@ python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir
 ### 2. Labelling Tool
 `LabellingTool.py` outputs a `Labels.csv` file containing the pixel coordinates of the ball and visibility per frame.
 
-You can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. If the `Save Results` button is pressed without every frame annotated, the frames for which there are missing labels are printed to the console. The program automatically terminates if the .csv file is successfully saved. **Important: if the program is terminated BEFORE saving, no labels are saved!**
-
 Label the frame by clicking on the center of a ball. In case of elongated, blurred, or almost invisible balls, try to still annotate the center. Specify `VISIBLE` for when a ball is (partially) visible in a frame, and `INVISIBLE` when it is occluded or out of frame. 
 
 It is advised to use a mouse with a scroll wheel for zooming capabilities. When using the scroll wheel, the frame will be zoomed in at the place below the mouse pointer. Note that, for faster annotation speeds, the next frame is automatically loaded after annotating the previous frame with the same zoom level as previous annotation.
+
+You can only save the annotations when all frames have been annotated with either a coordinate of the ball, or with the 'invisible' state. If the `Save Results` button is pressed without every frame annotated, the frames' indices for which there are missing labels are printed to the console. The program automatically terminates if the `Labels.csv` file is successfully saved. **Important: if the program is terminated BEFORE saving, no labels are saved!**
 
 Example usage:
 ```commandline
@@ -157,7 +157,7 @@ Controls:
 |Button|Toggle State|Specify the presence of a ball in a frame|
 |Button|Remove Pixel|Removes current ball annotation from the frame|
 |Button|Remove Frame|Permanently deletes the current frame from the frames directory|
-|Button|Save Results|Saves all annotations to *\matchX\Labels.csv*|
+|Button|Save Results|Saves all annotations to `\matchX\Labels.csv`|
 
 
 
