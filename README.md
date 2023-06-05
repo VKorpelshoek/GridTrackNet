@@ -15,14 +15,11 @@ Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/Track
 2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection capabilities for tiny objects
 3. 📺 5 input frames and 5 output frames per instance for increased temporal context
 
-<p>Benchmarks performed on 10-core M1 Pro MacBook Pro 2021 with Tensorflow Metal Version</p>
+*Benchmarks performed on 10-core M1 Pro MacBook Pro 2021 with Tensorflow Metal Version*
 
 <p align="center">
   <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
 </p>
-
-*Training data consisted primarily of diverse amature footage, as well as professional TV broadcasts.*
-
 
 ### GridTrackNet vs TrackNetV2 Comparison:
 
@@ -32,12 +29,12 @@ Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/Track
 |Input resolution|512 x 288| **768 x 432**|
 |Output resolution|512 x 288| **48 x 27**|
 |Inference speed|30 FPS|**117 FPS**|
-|Accuracy|OLD VAL|**NEW VAL**|
-|Precision|OLD VAL|**NEW VAL**|
-|Recall|OLD VAL|**NEW VAL**|
-|F1|OLD VAL|**NEW VAL**|
+|Accuracy|88.2%|**90.8%**|
+|Precision|96.6%|**95.2%**|
+|Recall|90.3%|**94.7%**|
+|F1|93.3%|**94.9%**|
 
-*Note: metrics were computed only once on a separate test dataset. *
+*Note: metrics were computed only once on a separate test dataset of sufficient size. *
 
 ## Setup
 1. Follow the complete Tensorflow installation guide for the installation on your system and how to enable hardware acceleration.
@@ -52,23 +49,23 @@ pip install -r "path/to/requirements.txt"
 
 ## Inference
 ### Video Output
-`Predict.py` receives as input a video and outputs the same video with visual predicted ball locations.
+`Predict.py` receives as input a `.mp4` video and outputs the same video with visual predicted ball locations.
 
 Example usage:
 ```commandline
-python /path/to/Predict.py --video_dir="/path/to/video.mp4" --model_dir="/path/to/model_weights.h5" --display_trail=1
+python "/path/to/Predict.py" --video_dir="/path/to/video.mp4" --model_dir="/path/to/model_weights.h5" --display_trail=1
 ``` 
 
 
 
 |Argument|Event|  
 |-----|----|
-|video_dir (required) | Path to .mp4 video|
+|video_dir (required) | Path to a `.mp4` video|
 |model_dir (optional) | Path to `model_weights.h5` file for loading a custom model|
-|display_trail (optional) | Displays a trail of the ball trajectory. If set to 0, only a red circle around the predicted ball location is displayd on each frame.|
+|display_trail (optional) | Displays a yellow trail of the ball trajectory. If set to 0, only a red circle around the predicted ball location is displayed on each frame.|
 
 ### API
-`Predict.py` script can be imported into your own code base. Predictions can be done by the following function call:
+`Predict.py` script can be imported in your own code and be called by the following function:
 ```commandline 
 Predict.getPredictions(frames, isBGRFormat = False)
 ```
@@ -169,6 +166,8 @@ Controls:
 `DataGen.py` generates TFRecord files containing the instances with corresponding labels to be used for training.
 
 Original dataset Link: https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
+
+*Training data consisted primarily of diverse amature footage, as well as professional TV broadcasts.*
 
 Example usage:
 ```commandline
