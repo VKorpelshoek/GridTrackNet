@@ -34,7 +34,7 @@ Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/Track
 |Recall|90.3%|**94.7%**|
 |F1|93.3%|**94.9%**|
 
-*Note: metrics were computed only once on a separate test dataset of sufficient size. *
+**Note: metrics were computed only once on a separate test dataset of sufficient size.*
 
 ## Setup
 1. Follow the complete Tensorflow installation guide for the installation on your system and how to enable hardware acceleration.
