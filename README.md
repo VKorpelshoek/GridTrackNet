@@ -15,13 +15,14 @@ Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/Track
 2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection capabilities for tiny objects
 3. 📺 5 input frames and 5 output frames per instance for increased temporal context
 
-* *Benchmarks performed on 10-core M1 Pro MacBook Pro 2021*
+*Benchmarks performed on 10-core M1 Pro MacBook Pro 2021 with Tensorflow Metal Version*
 
 <p align="center">
   <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
+  Training data consisted primarily of diverse amature footage, as well as professional TV broadcasts.
 </p>
 
-*Training data consisted mainly of diverse amature footage as well as professional TV broadcasts.*
+
 
 
 ### GridTrackNet vs TrackNetV2 Comparison:
