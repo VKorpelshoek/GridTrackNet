@@ -18,8 +18,8 @@ from tensorflow.python.ops.numpy_ops import np_config
 np_config.enable_numpy_behavior()
 
 IMGS_PER_INSTANCE = 5
-WIDTH = 768
 HEIGHT = 432
+WIDTH = 768
 GRID_COLS = 48
 GRID_ROWS = 27
 
@@ -173,7 +173,7 @@ def f1(y_true, y_pred):
 #					examples to the loss are downweighted by gamma parameter.
 def custom_loss(y_true, y_pred):
 	confWeight = 1
-	offsetWeight = 0.1
+	offsetWeight = 0.001
 
 	#Reformat the 15 output grids into 5x3 grids.
 	y_pred = tf.split(y_pred, IMGS_PER_INSTANCE, axis=1)
@@ -192,18 +192,22 @@ def custom_loss(y_true, y_pred):
 	diff = tf.abs(yTrueOffset - yPredOffset)
 	sum_diff = tf.reduce_sum(diff, axis=-1, keepdims=True)
 	masked_sum_diff = confGridTrue * sum_diff	#Only compute loss for cell where confGridTrue = 1
-	offset = tf.reduce_sum(masked_sum_diff, axis=[1,2,3,4])
+	#offset = tf.reduce_sum(masked_sum_diff, axis=[1,2,3,4])
+	sum_offset = tf.reduce_sum(masked_sum_diff, axis=[2,3,4])
+	offset = tf.reduce_mean(sum_offset, axis=[1])
 
 	#Confidence loss (focal)
+	alpha = 0.75
 	gamma = 2
-	positiveConfLoss = confGridTrue * tf.pow(1 - confGridPred, gamma) * tf.math.log(tf.clip_by_value(confGridPred, tf.keras.backend.epsilon(), 1))
-	negativeConfLoss = (1 - confGridTrue) * tf.pow(confGridPred, gamma) *  tf.math.log(tf.clip_by_value(1 - confGridPred, tf.keras.backend.epsilon(), 1))
-	confidence = tf.reduce_sum((-1)*(positiveConfLoss + negativeConfLoss),axis=[1,2,3,4])
+	positiveConfLoss = alpha * confGridTrue * tf.pow(1 - confGridPred, gamma) * tf.math.log(tf.clip_by_value(confGridPred, tf.keras.backend.epsilon(), 1))
+	negativeConfLoss = (1 - alpha) * (1 - confGridTrue) * tf.pow(confGridPred, gamma) *  tf.math.log(tf.clip_by_value(1 - confGridPred, tf.keras.backend.epsilon(), 1))
+	confidence = tf.reduce_mean((-1)*(positiveConfLoss + negativeConfLoss),axis=[1,2,3,4])
 
 	loss = offsetWeight * offset + confWeight * confidence
 
-	return tf.reduce_mean(loss)
+	return tf.reduce_sum(loss)
 
+	
 #Helper function to convert raw TFRecord file data entries into instances with labels
 def parseInstance(rawData):
 	feature_description = {
