@@ -204,24 +204,25 @@ Accepted arguments:
 Adapted version of the VGG16 model.<sup>2</sup> 
 |Layer Number|Layer Type|Filters|Kernel Size|Activation|Output Resolution|   
 |-|-----|-------|-----------|----------|---|
-|1|Conv2D|64|3x3|ReLU + Batch Norm.|768 x 432|
-|2|Conv2D|64|3x3|ReLU + Batch Norm.|768 x 432|
-|3|MaxPool2D|-|2x2 pooling, 2x2 strides|-|384 x 216|
-|4|Conv2D|128|3x3|ReLU + Batch Norm.|384 x 216|
-|5|Conv2D|128|3x3|ReLU + Batch Norm.|384 x 216|
-|6|MaxPool2D|-|2x2 pooling, 2x2 strides|-|192 x 108|
-|7|Conv2D|256|3x3|ReLU + Batch Norm.|192 x 108|
-|8|Conv2D|256|3x3|ReLU + Batch Norm.|192 x 108|
-|9|MaxPool2D|-|2x2 pooling, 2x2 strides|-|96 x 54|
-|10|Conv2D|256|3x3|ReLU + Batch Norm.|96 x 54|
-|11|Conv2D|256|3x3|ReLU + Batch Norm.|96 x 54|
-|12|Conv2D|256|3x3|ReLU + Batch Norm.|96 x 54|
-|13|MaxPool2D|-|2x2 pooling, 2x2 strides|-|48 x 27|
-|14|Conv2D|512|3x3|ReLU + Batch Norm.|48 x 27|
-|15|Conv2D|512|3x3|ReLU + Batch Norm.|48 x 27|
-|16|Conv2D|512|3x3|ReLU + Batch Norm.|48 x 27|
+|1|Conv2D|64|3x3|ReLU + BN|768 x 432|
+|2|Conv2D|64|3x3|ReLU + BN|768 x 432|
+|3|MaxPool2D|-|2x2 pooling|-|384 x 216|
+|4|Conv2D|128|3x3|ReLU + BN|384 x 216|
+|5|Conv2D|128|3x3|ReLU + BN|384 x 216|
+|6|MaxPool2D|-|2x2 pooling|-|192 x 108|
+|7|Conv2D|256|3x3|ReLU + BN|192 x 108|
+|8|Conv2D|256|3x3|ReLU + BN|192 x 108|
+|9|MaxPool2D|-|2x2 pooling|-|96 x 54|
+|10|Conv2D|256|3x3|ReLU + BN|96 x 54|
+|11|Conv2D|256|3x3|ReLU + BN|96 x 54|
+|12|Conv2D|256|3x3|ReLU + BN|96 x 54|
+|13|MaxPool2D|-|2x2 pooling|-|48 x 27|
+|14|Conv2D|512|3x3|ReLU + BN|48 x 27|
+|15|Conv2D|512|3x3|ReLU + BN|48 x 27|
+|16|Conv2D|512|3x3|ReLU + BN|48 x 27|
 |**17**|**Conv2D**|**15**|**3x3**|**Sigmoid**|**48 x 27**|
 
+*BN = Batch Normalization
 ## Formulas
 - Accuracy = $\dfrac{TP + TN}{TP + TN + FP1 + FP2 + FN}$
 - Precision = $\dfrac{TP}{TP + FP1 + FP2}$
