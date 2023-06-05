@@ -125,7 +125,11 @@ if __name__ == "__main__":
     output_filename = name + " Predicted" + extension
     output_path = os.path.join(directory, output_filename)
 
-    video_writer = cv2.VideoWriter(output_path, fourcc, 30, (frame_width, frame_height))
+    if(numFramesSkip == 1):
+        outputFPS = fps
+    else:
+        outputFPS = 30
+    video_writer = cv2.VideoWriter(output_path, fourcc, outputFPS, (frame_width, frame_height))
 
     index = 0
 

@@ -18,8 +18,8 @@ from tensorflow.python.ops.numpy_ops import np_config
 np_config.enable_numpy_behavior()
 
 IMGS_PER_INSTANCE = 5
-HEIGHT = 432
 WIDTH = 768
+HEIGHT = 432
 GRID_COLS = 48
 GRID_ROWS = 27
 
