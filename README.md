@@ -11,8 +11,8 @@ Paper: **LINK TO PAPER**
 Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2 <sup>1</sup>
 
 ### Main improvements
-1. 🚀 Redesigned ultra-efficient architecture reaching 117 FPS (📈+290% to TrackNetV2)*
-2. 🎾 Increased input resolution from 512x288 to 768x432 for improved detection capabilities for tiny objects
+1. 🚀 Redesigned ultra-efficient architecture reaching 115 FPS (📈+238% to TrackNetV2)*
+2. 🎾 Increased input resolution from 512x288 to 768x432
 3. 📺 5 input frames and 5 output frames per instance for increased temporal context
 
 **Benchmarks performed on 10-core M1 Pro MacBook Pro 2021 with Tensorflow Metal Version*
@@ -28,7 +28,7 @@ Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/Track
 |Input/output frames|3/3| **5/5**|
 |Input resolution|512 x 288| **768 x 432**|
 |Output resolution|512 x 288| **48 x 27**|
-|Inference speed|30 FPS|**117 FPS**|
+|Inference speed|34 FPS|**115 FPS**|
 |Accuracy|89.0%|**90.8%**|
 |Precision|94.1%|**95.2%**|
 |Recall|93.7%|**94.7%**|
