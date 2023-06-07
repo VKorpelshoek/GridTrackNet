@@ -29,10 +29,10 @@ Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/Track
 |Input resolution|512 x 288| **768 x 432**|
 |Output resolution|512 x 288| **48 x 27**|
 |Inference speed|30 FPS|**117 FPS**|
-|Accuracy|88.2%|**90.8%**|
-|Precision|96.6%|**95.2%**|
-|Recall|90.3%|**94.7%**|
-|F1|93.3%|**94.9%**|
+|Accuracy|89.0%|**90.8%**|
+|Precision|94.1%|**95.2%**|
+|Recall|93.7%|**94.7%**|
+|F1|93.9%|**94.9%**|
 
 **Note: metrics were computed only once on a separate test dataset of sufficient size.*
 
