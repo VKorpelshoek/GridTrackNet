@@ -80,9 +80,9 @@ def getDataAndLabels(imgs,xCoords,yCoords,visibilities):
         yCellIndex = math.floor(yPos)
         xOffset = xPos - xCellIndex
         yOffset = yPos - yCellIndex
-
-        if(visibilities[k] == 1):
-        #if(not ((visibilities[k] == 0) and xCoords[k] == 0 and yCoords[k] == 0)):
+    
+        #if(visibilities[k] == 1):
+        if(not ((visibilities[k] == 0) and xCoords[k] == 0 and yCoords[k] == 0)):
             confGrid[yCellIndex, xCellIndex] = 1
             xOffsetGrid[yCellIndex, xCellIndex] = xOffset
             yOffsetGrid[yCellIndex, xCellIndex] = yOffset
