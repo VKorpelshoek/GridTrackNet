@@ -6,7 +6,7 @@
 
 Official Tensorflow implementation of GridTrackNet for real time tennis ball tracking; a CNN aimed at locating and tracking a small fast moving object throughout multiple concurrent frames by means of grid outputs.
 
-Paper: **LINK TO PAPER**
+Paper: *Coming Soon...*
 
 Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2 <sup>1</sup>
 
@@ -167,7 +167,7 @@ Controls:
 
 Link to the original dataset (48.2GB): https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
 
-*Training data consisted primarily of diverse amature footage as well as professional TV broadcasts, but can be trained on custom data for your own use case.*
+*Training data consisted primarily of diverse amateur footage as well as professional TV broadcasts, but can be trained on custom data for your own use case.*
 
 Example usage:
 ```commandline
@@ -240,7 +240,7 @@ Adapted version of the VGG16 model.<sup>2</sup>
 ## References
 1. N. -E. Sun et al., "TrackNetV2: Efficient Shuttlecock Tracking Network," 2020 International Conference on Pervasive Artificial Intelligence (ICPAI), Taipei, Taiwan, 2020, pp. 86-91, doi: 10.1109/ICPAI51961.2020.00023.
 2. Simonyan, K. & Zisserman, A. (2014). Very Deep Convolutional Networks for Large-Scale Image Recognition. CoRR, abs/1409.1556. 
-3. Amature tennis data courtesy to AmateurTennisTV http://amateurtennis.tv. YouTube: https://www.youtube.com/@AmateurTennistv
+3. amateur tennis data courtesy to AmateurTennisTV http://amateurtennis.tv. YouTube: https://www.youtube.com/@AmateurTennistv
 
 *Disclaimer: some parts of the source code have been developed in assistance with ChatGPT-4 and, even though unlikely, might contain unexpected behavior at times.*
 
