@@ -136,7 +136,7 @@ python "/path/to/FrameGenerator.py" --video_dir="path/to/video.mp4" --export_dir
 ### 2. Labelling Tool
 `LabellingTool.py` outputs a `Labels.csv` file containing the pixel coordinates of the ball and visibility per frame.
 
-Label the frame by clicking on the center of a ball. In case of elongated, blurred, or almost invisible balls, try to still annotate the center. Specify `VISIBLE` for when a ball is (partially) visible in a frame, and `INVISIBLE` when it is occluded or out of frame. 
+Label the frame by clicking on the center of a ball. In case of elongated, blurred, or almost invisible balls, try to still annotate the center. Specify `VISIBLE` for when a ball is (partially) visible in a frame, and `INVISIBLE` when it is out of frame. You can optionally mark the approximated location of occluded tennis balls in case you want the model to predict in these casees, but still label the frame with the `INVISIBLE` state.
 
 It is advised to use a mouse with a scroll wheel for zooming capabilities. When using the scroll wheel, the frame will be zoomed in at the place below the mouse pointer. Note that, for faster annotation speeds, the next frame is automatically loaded after annotating the previous frame with the same zoom level as previous annotation.
 
