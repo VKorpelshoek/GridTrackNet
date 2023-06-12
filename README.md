@@ -240,7 +240,6 @@ Adapted version of the VGG16 model.<sup>2</sup>
 ## References
 1. N. -E. Sun et al., "TrackNetV2: Efficient Shuttlecock Tracking Network," 2020 International Conference on Pervasive Artificial Intelligence (ICPAI), Taipei, Taiwan, 2020, pp. 86-91, doi: 10.1109/ICPAI51961.2020.00023.
 2. Simonyan, K. & Zisserman, A. (2014). Very Deep Convolutional Networks for Large-Scale Image Recognition. CoRR, abs/1409.1556. 
-3. amateur tennis data courtesy to AmateurTennisTV http://amateurtennis.tv. YouTube: https://www.youtube.com/@AmateurTennistv
 
 *Disclaimers*:
 - *The data set provided is a compilation of data gathered from various sources. Due to the diverse and widespread nature of these sources, it is not feasible to individually cite each one. The compilation and presentation of this data is primarily intended for research and educational purposes. If you are the owner of any data included in this dataset and have concerns about its use, please contact us directly.* 
