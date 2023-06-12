@@ -165,7 +165,7 @@ Controls:
 ### 3. Dataset Generation
 `DataGen.py` generates TFRecord files containing the instances with corresponding labels to be used for training.
 
-Link to the original dataset (48.2GB): https://drive.google.com/drive/folders/1FzkE5i5_ybyn6Tc6KMj0mgTiH7zPGgHm?usp=sharing
+Link to the original dataset (48.2GB): https://drive.google.com/drive/folders/1gJUn2d6kVji4S_LiZWD1enATZFPs3gRp?usp=sharing
 
 *Training data consisted primarily of diverse amateur footage as well as professional TV broadcasts, but can be trained on custom data for your own use case.*
 
