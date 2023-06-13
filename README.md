@@ -202,6 +202,10 @@ Accepted arguments:
 
 ## Architecture
 Adapted version of the VGG16 model.<sup>2</sup> 
+<p align="center">
+  <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
+</p>
+
 |Layer Number|Layer Type|Filters|Kernel Size|Activation|Output Resolution|   
 |-|-----|-------|-----------|----------|---|
 |1|Conv2D|64|3x3|ReLU + BN|768 x 432|
