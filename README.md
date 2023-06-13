@@ -203,7 +203,7 @@ Accepted arguments:
 ## Architecture
 Adapted version of the VGG16 model.<sup>2</sup> 
 <p align="center">
-  <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GridTrackNet%20Preview%20GIF.gif" alt="image" style="display:block; margin:auto;" />
+  <img src="https://github.com/VKorpelshoek/GridTrackNet/blob/main/Figures/GrridTrackNet%20Architecture.png" alt="image" style="display:block; margin:auto;" />
 </p>
 
 |Layer Number|Layer Type|Filters|Kernel Size|Activation|Output Resolution|   
