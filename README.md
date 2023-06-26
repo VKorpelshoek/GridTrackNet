@@ -11,7 +11,7 @@ Paper: *Coming soon...*
 Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/TrackNetv2 <sup>1</sup>
 
 ### Main improvements
-1. 🚀 Redesigned ultra-efficient architecture reaching 115 FPS (📈+238% to TrackNetV2)*
+1. 🚀 Redesigned ultra-efficient architecture reaching 116 FPS (📈+241% to TrackNetV2)*
 2. 🎾 Increased input resolution from 512x288 to 768x432
 3. 📺 5 input frames and 5 output frames per instance for increased temporal context
 
@@ -28,11 +28,11 @@ Originally based on TrackNetV2: https://nol.cs.nctu.edu.tw:234/open-source/Track
 |Input/output frames|3/3| **5/5**|
 |Input resolution|512 x 288| **768 x 432**|
 |Output resolution|512 x 288| **48 x 27**|
-|Inference speed|34 FPS|**115 FPS**|
-|Accuracy|89.0%|**90.8%**|
-|Precision|94.1%|**95.2%**|
-|Recall|93.7%|**94.7%**|
-|F1|93.9%|**94.9%**|
+|Inference speed|34 FPS|**116 FPS**|
+|Accuracy|88.2%|**91.3%**|
+|Precision|94.4%|**96.6%**|
+|Recall|92.7%|**93.9%**|
+|F1|93.5%|**95.3%**|
 
 **Note: metrics were computed only once on a separate test dataset of sufficient size.*
 
